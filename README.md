@@ -17,8 +17,10 @@ pip freeze > requirements.txt
 pip install pipreqs
 // 生成
 pipreqs .
+pipreqs --encoding=utf-8 .
 // 更新
 pipreqs --force .
+pipreqs --force --encoding=utf-8 .
 ```
 
 ## #!/usr/bin/python3

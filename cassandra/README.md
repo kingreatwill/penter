@@ -67,3 +67,14 @@ cqlsh -uncc -p123456
 
 // 删除原来的默认账号
 DROP USER cassandra ;
+
+DESCRIBE keyspaces;
+describe tables;
+describe table users;
+CREATE KEYSPACE excelsior2  WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};
+CREATE KEYSPACE excalibur
+    WITH replication = {'class': 'NetworkTopologyStrategy', 'DC1' : 1, 'DC2' : 3}
+    AND durable_writes = false;
+    
+SELECT * FROM system.schema_keyspaces;
+

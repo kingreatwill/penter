@@ -1,0 +1,1 @@
+cassandra_driver==3.20.2

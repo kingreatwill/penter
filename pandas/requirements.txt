@@ -1,0 +1,6 @@
+matplotlib==3.1.2
+requests==2.22.0
+pandas==0.25.3
+demjson==2.2.4
+pylab==0.0.2
+python_dateutil==2.8.1
