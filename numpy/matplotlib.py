@@ -2,6 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
+#plt.rcParams['font.family']=['SimHei'] # 用来正常显示中文标签
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 

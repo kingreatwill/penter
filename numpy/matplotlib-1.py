@@ -3,6 +3,12 @@ import matplotlib
 # 查看matplotlib的字体存放目录与查找matplotlibrc文件路径
 print( matplotlib.matplotlib_fname())
 
+# 查看系统字体
+a=sorted([f.name for f in matplotlib.font_manager.fontManager.ttflist])
+
+for i in a:
+    print(i)
+
 """
 # https://www.jianshu.com/p/8ed59ac76c06
 
