@@ -13,6 +13,7 @@ print('\n python 路径为',sys.path)
 
 from sys import path  #  导入特定的成员
 print('path:',path) # 因为已经导入path成员，所以此处引用时不需要加sys.path
+# sys.path 包含了一个 Python 解释器自动查找所需模块的路径的列表。
 
 from sys import *  #  导入所有的成员
 print('argv:',argv) # 因为已经导入所有的成员，所以此处引用时不需要加sys.argv
