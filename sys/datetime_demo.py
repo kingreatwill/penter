@@ -17,6 +17,8 @@ print(today)
 
 yesterday = today - datetime.timedelta(days=1)
 print(yesterday)
+yesterday2 = date.today() + datetime.timedelta(-1)
+print(yesterday2)
 
 last_month = today.month - 1 if today.month - 1 else 12
 print(last_month)

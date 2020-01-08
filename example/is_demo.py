@@ -105,3 +105,88 @@ print(calendar.isleap(1900))
 isleap(2008)
 isleap(2000)
 isleap(1900)
+
+# 如果一个n位正整数等于其各位数字的n次方之和,则称该数为阿姆斯特朗数。 例如1^3 + 5^3 + 3^3 = 153。
+#
+# 1000以内的阿姆斯特朗数： 1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407。
+# 当n=3时,又称水仙花数,特指一种三位数,其各个数之立方和等于该数。 水仙花数共有4个,分别为:153、370、371、407。
+
+def is_Armstrongnumber(num):
+    s_num = str(num)
+    n = len(s_num)
+    temp = 0
+    for s in s_num:
+        temp += int(s)**n
+    return temp == num
+
+print("是否阿姆斯特朗数{0}".format(is_Armstrongnumber(417)))
+
+def is_Armstrongnumber2(num):
+    # 初始化变量 sum
+    sum = 0
+    # 指数
+    n = len(str(num))
+    # 检测
+    temp = num
+    while temp > 0:
+        digit = temp % 10
+        sum += digit ** n
+        temp //= 10 # 取整除赋值运算符	c //= a 等效于 c = c // a
+
+    # 输出结果
+    if num == sum:
+        print(num, "是阿姆斯特朗数")
+    else:
+        print(num, "不是阿姆斯特朗数")
+
+
+# 最大公约数算法
+# 最大公因数，也称最大公约数、最大公因子，指两个或多个整数共有约数中最大的一个。a，b的最大公约数记为（a，b），同样的，a，b，c的最大公约数记为（a，b，c）
+
+def max_common_divisor(x, y):
+    """该函数返回两个数的最大公约数"""
+    hcf = 0
+    # 获取最小值
+    if x > y:
+        smaller = y
+    else:
+        smaller = x
+
+    for i in range(1, smaller + 1):
+        if ((x % i == 0) and (y % i == 0)):
+            hcf = i
+
+    return hcf
+num1 = 24
+num2 = 60
+
+print("({0},{1}) = {2}".format(num1, num2, max_common_divisor(num1, num2)))
+
+# 最小公倍数
+# 两个或多个整数公有的倍数叫做它们的公倍数，其中除0以外最小的一个公倍数就叫做这几个整数的最小公倍数。整数a，b的最小公倍数记为[a，b]，同样的，a，b，c的最小公倍数记为[a，b，c]
+
+# 最小公倍数与最大公约数 : (a,b)x[a,b]=ab
+
+# 定义函数
+def min_common_multiple(x, y):
+    #  获取最大的数
+    if x > y:
+        greater = x
+    else:
+        greater = y
+    lcm = x * y
+    while (True):
+        if ((greater % x == 0) and (greater % y == 0)):
+            lcm = greater
+            break
+        greater += 1
+
+    return lcm
+
+
+# 获取用户输入
+num1 = 24
+num2 = 60
+print("[{0},{1}] = {2}".format(num1, num2, min_common_multiple(num1, num2)))
+
+print("({0},{1}) * [{0},{1}] = {0}*{1} = {2}".format(num1, num2, max_common_divisor(num1, num2) * min_common_multiple(num1, num2)))
