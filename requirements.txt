@@ -1,7 +1,7 @@
 matplotlib==3.1.2
 requests==2.22.0
 six==1.12.0
-tensorflow_gpu==2.0.0
+tensorflow_gpu==2.0.1
 aiohttp==3.6.2
 pyecharts==1.6.0
 demjson==2.2.4
