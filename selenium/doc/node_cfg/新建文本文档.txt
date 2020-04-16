@@ -1,0 +1,41 @@
+{
+  "capabilities": [
+    {
+      "browserName": "firefox",
+      "acceptSslCerts": true,
+      "javascriptEnabled": true,
+      "takesScreenshot": false,
+      "firefox_profile": "",
+      "browser-version": "27",
+      "platform": "WINDOWS",
+      "maxInstances": 5,
+      "firefox_binary": "",
+      "cleanSession": true
+    },
+    {
+      "browserName": "chrome",
+      "maxInstances": 5,
+      "platform": "WINDOWS",
+      "webdriver.chrome.driver": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+    },
+    {
+      "browserName": "internet explorer",
+      "maxInstances": 1,
+      "platform": "WINDOWS",
+      "webdriver.ie.driver": "C:/Program Files (x86)/Internet Explorer/iexplore.exe"
+    }
+  ],
+  "configuration": {
+    "_comment" : "Configuration for Node",
+    "cleanUpCycle": 2000,
+    "timeout": 30000,
+    "proxy": "org.openqa.grid.selenium.proxy.WebDriverRemoteProxy",
+    "port": 5555,
+    "host": ip,
+    "register": true,
+    "hubPort": 4444,
+    "maxSession": 5
+  }
+}
+
+java -Dwebdriver.gecko.driver="./selenium-java-3.7.1/geckodriver.exe" -Dwebdriver.chrome.driver="./selenium-java-3.7.1/chromedriver.exe" -Dwebdriver.ie.driver="./selenium-java-3.7.1/IEDriverServer.exe" -jar selenium-server-standalone-3.7.1.jar -role node -hub http://localhost:4444/grid/register/ -browserTimeout 60 -sessionTimeout 30

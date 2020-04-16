@@ -1,0 +1,35 @@
+{
+  "capabilities":
+  [
+    {
+      "browserName": "firefox",       
+      "platform": "WINDOWS",       
+      "maxInstances": 5,       
+      "seleniumProtocol": "WebDriver",       
+      "webdriver.gecko.driver": "D:/drivers/geckodriver.exe",       
+      "binary":"C:/Program Files/Mozilla Firefox/firefox.exe"
+    },
+    {
+      "browserName": "chrome",
+      "platform": "WINDOWS",
+      "maxInstances": 5,
+      "seleniumProtocol": "WebDriver",
+      "webdriver.chrome.driver": "d:/doreadme/chromedriver.exe",
+      "binary": "d:/doreadme/doreadme.exe"
+    }
+  ],
+  "maxSession": 5,
+  "port": 5555,
+  "register": true,
+  "registerCycle": 5000,
+  "hub": "http://192.168.104.209:4444/grid/register",
+  "nodeStatusCheckTimeout": 5000,
+  "nodePolling": 5000,
+  "role": "node",
+  "unregisterIfStillDownAfter": 60000,
+  "downPollingLimit": 2,
+  "debug": false,
+  "servlets" : [],
+  "withoutServlets": [],
+  "custom": {}
+}
