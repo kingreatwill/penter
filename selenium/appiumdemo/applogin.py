@@ -6,11 +6,12 @@ desired_caps = {
     "version": "",
     "deviceName": "Android01",
     "platform": "ANDROID",
-    "appActivity": ".HomeScreenActivity",
-    "appPackage": "io.selendroid.testapp",
+    "appActivity": ".MainActivity",
+    "appPackage": "io.flutter.demo.gallery",
 }
-
+# https://github.com/appium/python-client
 """
+http://www.testclass.net/appium/appium-base-summary/
 Desired Capabilities在启动session的时候是必须提供的。
 
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -65,6 +66,13 @@ desired_caps = {
 'resetKeyboard': "True",       #重置输入法到初始状态
 'noReset': "True"               #启动app时不要清除app里的原有的数据
 }
+
+ "appActivity": ".HomeScreenActivity",
+    "appPackage": "io.selendroid.testapp",
+     driver.install_app('E:/Tests/Appium/selendroid-test-app-0.11.0.apk')
+
+el = driver.find_element_by_id('io.selendroid.testapp:id/my_text_field')
+el.send_keys("123")
 """
 
 # driver.installApp("D:\\android\\apk\\ContactManager.apk");
@@ -79,14 +87,138 @@ desired_caps = {
 
 driver = webdriver.Remote(command_executor='http://192.168.110.216:9999/wd/hub',
                           desired_capabilities=desired_caps)
+# settings = driver.get_settings()
+# driver.update_settings({"some setting": "the value"})
 
-if driver.is_app_installed("io.selendroid.testapp"):
+# driver.start_activity('com.foo.app', '.MyActivity')
+# driver.start_activity('com.foo.app', '.MainActivity', app_wait_package='your package name')
+
+if driver.is_app_installed("io.flutter.demo.gallery"):
     print("installed")
     # 升级 driver.install_app('E:/Tests/Appium/selendroid-test-app-0.11.0.apk')
     # driver.launch_app()
 else:
     print("not installed")
-    driver.install_app('E:/Tests/Appium/selendroid-test-app-0.11.0.apk')
+    driver.install_app('E:/Tests/Appium/flutter_gallery_android.apk')
+"""
+# 打开 uiautomatorviewer
+# resource-id 使用 driver.find_element_by_id('io.selendroid.testapp:id/my_text_field')
+# from selenium.webdriver.common.by import By
+# or driver.findElement(By.ID,"com.android.calculator2:id/formula")
 
-el = driver.find_element_by_id('io.selendroid.testapp:id/my_text_field')
-el.send_keys("123")
+
+
+# text 使用 driver.find_element_by_name("name") ??? 不行！
+# el = driver.find_element(By.NAME, "CUPERTINO")
+# el = driver.find_elements_by_android_uiautomator('new UiSelector().text("CUPERTINO")')[0] 可以！
+# driver.find_element_by_xpath("//android.view.View[contains(@text,'CUPERTINO')]") 可以！
+els = self.driver.find_elements_by_android_uiautomator('new UiSelector().clickable(true)')
+
+
+# UiSelector
+driver.findElementByAndroidUIAutomator("new UiSelector().text(\"clr\")").click();
+driver.findElementByAndroidUIAutomator("new UiSelector().text(\"8\")").click();
+driver.findElementByAndroidUIAutomator("new UiSelector().description(\"plus\")").click(); // content-desc
+driver.findElementByAndroidUIAutomator("new UiSelector().text(\"5\")").click();
+driver.findElementByAndroidUIAutomator("new UiSelector().description(\"equals\")").click();
+需要注意的是 description() 方法用的是content-desc属性。
+
+
+# content-desc 对应driver.find_element_by_accessibility_id('Animation')
+
+
+
+
+# xpath 用class的属性来替代做标签的名字。
+# findElementByXpath("//android.widget.TextView[contains(@text,'Add note')]")
+使用方法：
+
+driver.findElement(By.xpath("//android.view.ViewGroup/android.widget.Button"))  //7
+当果如果出现class 相同的情况下可以用控件的属性值进行区分。 
+java driver.findElement(By.xpath("//android.widget.Button[contains(@text,'7')]")).click(); //7 
+driver.findElement(By.xpath("//android.widget.Button[contains(@content-desc,'times')]")).click(); //* 
+driver.findElement(By.xpath("//android.widget.Button[contains(@text,'7')]")).click(); //7 
+driver.findElement(By.xpath("//android.widget.Button[contains(@content-desc,'equals')]")).click(); //= 
+XPath 在 Appium 上的用法依然很强大，有时需要写更臭更长的定位语法，因为APP上元素的class命令本来就长，再加上多层级，结果可想而知。
+
+
+"""
+
+from time import sleep
+from selenium.webdriver.common.by import By
+
+sleep(10)
+# el = driver.find_elements_by_android_uiautomator('new UiSelector().text("CUPERTINO")')[0]
+# el = driver.find_element_by_name("CUPERTINO") NO
+el = driver.find_element_by_xpath("//android.view.View[contains(@text,'CUPERTINO')]")
+el.click()
+
+# el.send_keys("123")
+# el.get_attribute('text')
+"""
+按键
+driver.press_keycode(4)          #发送keycode，功能：按键 # 该方法Android特有
+
+KEYCODE_CALL 拨号键 5 
+KEYCODE_ENDCALL 挂机键 6 
+KEYCODE_HOME 按键Home 3 
+KEYCODE_MENU 菜单键 82 
+KEYCODE_BACK 返回键 4 
+KEYCODE_SEARCH 搜索键 84 
+KEYCODE_CAMERA 拍照键 27 
+KEYCODE_FOCUS 拍照对焦键 80 
+KEYCODE_POWER 电源键 26 
+KEYCODE_NOTIFICATION 通知键 83 
+KEYCODE_MUTE 话筒静音键 91 
+KEYCODE_VOLUME_MUTE 扬声器静音键 164 
+KEYCODE_VOLUME_UP 音量增加键 24 
+KEYCODE_VOLUME_DOWN 音量减小键 25
+Tips：后面的数字为  keycode
+Android模拟事件keycode对照表 https://blog.csdn.net/fengjinghuanian/article/details/90710877
+
+driver.keyevent(4)               #发送keycode，功能：按键，与press_keycode无区别
+driver.hide_keyboard()           #iOS使用key_name隐藏，安卓不使用参数，功能：隐藏键盘
+driver.long_press_keycode(4)     #发送keycode，功能：长按键
+driver.lock(100) # 熄屏  设置熄屏一段时间 不带参数，所以熄屏之后就不会再点亮屏幕了
+
+driver.current_activity # 得到当前应用的activity。只适用于Android
+driver.hide_keyboard() # 收起键盘，这个方法很有用，当我们对一个输入框输入完成后，需要将键盘收起，再切换到一下输入框进行输入
+driver.swipe(75, 500, 75, 0, 800) # 模拟用户滑动。将控件或元素从一个位置（x,y）拖动到另一个位置（x,y）。
+driver.pull_file() # 从设备中拉出文件。
+Java String content = "some data for the file"; byte[] data = Base64.encodeBase64(content.getBytes()); 
+driver.pushFile("sdcard/test.txt", data); # 推送文件到设备中去。
+
+
+sleep(5)
+# home按键
+driver.press_keycode(3)
+
+from appium.webdriver.extensions.android.nativekey import AndroidKey
+driver.press_keycode(AndroidKey.HOME)
+"""
+
+
+
+from appium.webdriver.common.touch_action import TouchAction
+#action = TouchAction(driver)
+#action.tap(元素) or
+#action.press(x=110,y=200).move_to(x=3,y=10).release().perform()
+
+
+
+# 多指操作
+from appium.webdriver.common.multi_action import MultiAction
+# smile = TouchAction()
+# smile.press(x=110,y=200).move_to(x=3,y=10).release()
+# ma = MultiAction(driver)
+# ma.add(e1, e2, smile)
+# ma.perform()
+# or
+# smile1 = TouchAction()
+# smile2 = TouchAction()
+# smile1.press(e1).move_to(x=3,y=10).release()
+# ma = MultiAction(driver)
+# ma.add(smile1, smile2)
+# ma.perform()
+
+sleep(5)
