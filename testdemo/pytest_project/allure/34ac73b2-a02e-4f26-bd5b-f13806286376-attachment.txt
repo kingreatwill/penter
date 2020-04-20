@@ -1,0 +1,4 @@
+====登录功能，返回账号，token===
+== 每个用例都调用的外层fixture：打印用户token： npoi213bn4 ==
+***基础用例：获取用户个人信息***
+用户名:testyy, token:npoi213bn4

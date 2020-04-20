@@ -1,0 +1,2 @@
+== 每个用例都调用的外层fixture：打印用户token： npoi213bn4 ==
+==没有__init__测试用例，我进入头条了== ('testyy', 'npoi213bn4')

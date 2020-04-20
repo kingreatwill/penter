@@ -1,0 +1,3 @@
+###用户 testyy 打开51job网站###
+== 每个用例都调用的外层fixture：打印用户token： npoi213bn4 ==
+51job，列出所有职位用例
