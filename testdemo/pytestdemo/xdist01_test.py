@@ -54,10 +54,21 @@ each：master将完整的测试索引列表分发到每个worker
 load：master将大约25%的测试用例以轮询的方式分发到各个worker，剩余的测试用例则会等待workers执行完测试用例以后再分发
 
 可以使用  pytest_xdist_make_scheduler  这个hook来实现自定义测试分发逻辑。
+
+分布式：https://codespeak.net/execnet/example/test_info.html
+https://github.com/pytest-dev/pytest-xdist
 """
 
 import pytest
 from filelock import FileLock
+
+
+
+# import execnet, os
+# gw = execnet.makegateway()
+# ch = gw.remote_exec("import os; channel.send(os.getcwd())")
+# res = ch.receive()
+# assert res == os.getcwd()
 
 
 @pytest.fixture(scope="session")
