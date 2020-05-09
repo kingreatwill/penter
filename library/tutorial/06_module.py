@@ -1,3 +1,6 @@
+import importlib
+import time
+
 import fibo
 # import fibo as fib
 """
@@ -7,6 +10,9 @@ import fibo
 fibo.fib(1000)
 fibo.fib2(100)
 print(fibo.__name__)
+time.sleep(20) ## 去修改fibo.py ,能看到修改后的结果
+importlib.reload(fibo)
+fibo.fib(1000)
 
 # from fibo import fib, fib2
 # # from fibo import * #这会调入所有非以下划线（_）开头的名称
