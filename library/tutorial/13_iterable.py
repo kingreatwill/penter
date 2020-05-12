@@ -5,7 +5,7 @@ Python中 list，truple，str，dict这些都可以被迭代，但他们并不�
 因为和迭代器相比有一个很大的不同，list/truple/map/dict这些数据的大小是确定的，也就是说有多少事可知的。但迭代器不是，迭代器不知道要执行多少次，所以可以理解为不知道有多少个元素，每调用一次next()，就会往下走一步，是惰性的。
 
 """
-
+import types
 from collections.abc import Iterable, Iterator
 # 可迭代对象
 class Eg1:
@@ -32,7 +32,8 @@ print(isinstance((), Iterator))  # False
 print(isinstance(o1, Iterator))  # False
 print(isinstance((x for x in range(10)), Iterator))  # True
 print(isinstance(range(10), Iterator))  # False
-
+print(isinstance((x for x in range(10)), types.GeneratorType))  # True
+print(isinstance(range(10), types.GeneratorType))  # False
 # 凡是可以next()的，都是Iterator
 """
 如果这个答案有什么地方不对的话，以文档为准。iterable，根据文档中的定义，指的是那些可以把自己的成员一个一个返回（或者说遍历自己的成员）的一类对象（这里的成员不是类成员的那种成员，而更类似于元素）。
