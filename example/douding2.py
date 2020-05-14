@@ -149,5 +149,5 @@ class MyHTMLParser(HTMLParser):
 # parser.feed(html_str)
 # https://dearplain.github.io/
 # https://github.com/dearplain/douding
-for i in range(1, 92):
-    print(download_img("http://211.147.220.164/index.jsp?file=2061749927&width=1000&pageno=" + str(i), "d_" + str(i) + ".png"))
+for i in range(1, 258):
+    print(download_img("http://211.147.220.164/index.jsp?file=437611153&width=1000&pageno=" + str(i), "e_" + str(i) + ".png"))
