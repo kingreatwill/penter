@@ -1,0 +1,1 @@
+# 操作各种格式的邮箱 https://docs.python.org/zh-cn/3/library/mailbox.html
