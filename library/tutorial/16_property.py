@@ -36,6 +36,30 @@ print(s.score)  # 100
 print(s._score)  # 100
 
 
+class Student2(object):
+    def __init__(self):
+        self._score = None
+
+    def getscore(self):
+        print("xxx")
+        return self._score
+
+    def setscore(self, value):
+        print("sss")
+        if not isinstance(value, int):
+            raise ValueError('score must be an integer!')
+        if value < 0 or value > 100:
+            raise ValueError('score must between 0 ~ 100!')
+        self._score = value
+
+    score = property(getscore, setscore)
+print("--------------")
+s2 = Student2()
+s2.score = 10
+print(s2.score)
+print("--------------")
+
+
 class A:
     i = 100
 
@@ -56,14 +80,14 @@ class A:
 A.print1(0)  # 11111 可以调用
 A.print1(A())  # 11111 可以调用
 
-A.print3() ## 100
+A.print3()  ## 100
 
 A().print2()  # 222
 A().print1()  # 11111
 a1 = A()
 print(A.i)  # 100
 A.i += 1
-A.print3() ## 101
+A.print3()  ## 101
 print(A.i)  # 101
 print(a1.i)  # 101
 a2 = A()

@@ -2,6 +2,8 @@
 
 # https://python3-cookbook.readthedocs.io/zh_CN/latest/c02/p09_normalize_unicode_text_to_regexp.html
 
+# https://docs.python.org/3/py-modindex.html
+
 a = {'x': 1, 'z': 3}
 b = {'y': 2, 'z': 4}
 merged = dict(b)  # 创建一个新的字典
