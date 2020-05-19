@@ -3,6 +3,12 @@ import tracemalloc
 
 tracemalloc.start()
 
+def test():
+    """Stupid test function"""
+    L = [i for i in range(100)]
+
+for i in range(1000000):
+    test()
 # ... run your application ...
 
 snapshot = tracemalloc.take_snapshot()
