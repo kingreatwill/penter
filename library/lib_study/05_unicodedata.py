@@ -95,4 +95,13 @@ print(unicodedata.ucd_3_2_0)
 #print('const CATEGORY_e CHAR_CATEGORIES[] = {%s};' % ', '.join(unicodedata.category(chr(codepoint)) for codepoint in range(0x110000)))
 
 
+print(u'\ua62c') #꘬  因为没有定义 print(unicodedata.name(u"\ua62c"))
+print(unicodedata.category(u"\ua62c")) # Cn
+#https://baike.baidu.com/item/Unicode/750500?fr=aladdin
+print(u'\u4e00')
+# https://home.unicode.org/#
+print(u'\uA755')
+print(u'\u03c0')
+print(chr(0x03c0))
+print(chr(0x1F4AF)) # 💯
 
