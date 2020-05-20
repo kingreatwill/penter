@@ -8,6 +8,8 @@ import os
 众所周知，虽然Python语法简洁，编写高效，但相比C/C++运行慢很多。
 然而Python还有个重要的特性：它是一门胶水语言！Python可以很容易地扩展C/C++。
 OpenCV-Python就是用Python包装了C++的实现，背后实际就是C++的代码在跑，所以代码的运行速度跟原生C/C++速度一样快。
+
+Python3调用C程序 https://www.jianshu.com/p/edb8698d1374
 '''
 print(cv2.getVersionString())
 
