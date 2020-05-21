@@ -4,6 +4,7 @@ import os
 # https://opencv-python-tutroals.readthedocs.io/en/latest/index.html
 # https://github.com/ex2tron/OpenCV-Python-Tutorial
 # http://codec.wang/opencv-python-introduction-and-installation/
+# https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html
 '''
 众所周知，虽然Python语法简洁，编写高效，但相比C/C++运行慢很多。
 然而Python还有个重要的特性：它是一门胶水语言！Python可以很容易地扩展C/C++。
