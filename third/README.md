@@ -4,6 +4,8 @@ git clone https://github.com/madmaze/pytesseract.git
 cd pytesseract && pip install -U .
 pip3 install face_recognition -i  http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
+pip install -r requirements.txt
+
 ## 图片处理 PIL (Python Image Library)
 PIL http://pythonware.com/products/pil/
 ### Pillow
@@ -38,8 +40,9 @@ https://stxnext.com/blog/2019/05/31/flask-vs-django-comparison/
 ### Django
 
 ### Flask
-
+https://github.com/pallets/flask
 ### Tornado
+https://github.com/tornadoweb/tornado
 
 
 ## test

@@ -43,9 +43,53 @@ rtsp://IP:554/ISAPI/streaming/channels/102?auth=YWRtaW46YWRtaW4xMjM0NTY=
 rtsp://IP:554/ISAPI/streaming/channels/103?auth=YWRtaW46YWRtaW4xMjM0NTY=
 rtsp://admin:12345@172.6.10.11:554/Streaming/Channels/103
 """
-import cv2
-capture = cv2.VideoCapture("rtsp://admin:cqh123456@192.168.1.232/h264/ch1/sub/av_stream")
 
+# 获取捕获的分辨率
+# propId可以直接写数字，也可以用OpenCV的符号表示
+# width, height = capture.get(3), capture.get(4)
+# print(width, height)
+# 以原分辨率的一倍来捕获
+# capture.set(cv2.CAP_PROP_FRAME_WIDTH, width * 2)
+# capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height * 2)
+# 经验之谈：某些摄像头设定分辨率等参数时会无效，因为它有固定的分辨率大小支持，一般可在摄像头的资料页中找到。
+
+"""
+跟打开摄像头一样，如果把摄像头的编号换成视频的路径就可以播放本地视频了。
+回想一下cv2.waitKey()，它的参数表示暂停时间，所以这个值越大，视频播放速度越慢，反之，播放速度越快，通常设置为25或30。
+"""
+# "rtmp://58.200.131.2:1935/livetv/hunantv" # 湖南卫视
+# rtmp_str = 'rtmp://media3.scctv.net/live/scctv_800'  # CCTV
+
+"""
+1，RTMP协议直播源
+香港卫视：rtmp://live.hkstv.hk.lxdns.com/live/hks  不能使用了
+
+2，RTSP协议直播源
+
+珠海过澳门大厅摄像头监控：rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp
+大熊兔（点播）：rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov
+
+3，HTTP协议直播源
+
+香港卫视：http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8
+
+CCTV1高清：http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8
+
+CCTV3高清：http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8
+
+CCTV5高清：http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8
+
+CCTV5+高清：http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8
+
+CCTV6高清：http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8
+
+苹果提供的测试源（点播）：http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear2/prog_index.m3u8
+
+"""
+
+
+import cv2
+capture = cv2.VideoCapture("http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8")#cv2.VideoCapture("rtsp://admin:cqh123456@192.168.1.232/h264/ch1/sub/av_stream")
 while(True):
     # 获取一帧
     ret, frame = capture.read()
