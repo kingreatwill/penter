@@ -36,6 +36,18 @@ tornado可以试试peewee 星最多
 
 
 ## web
+https://www.cnblogs.com/wongbingming/p/11002978.html
+https://www.runoob.com/python3/python-uwsgi.html
+这个协议旨在解决众多 web 框架和web server软件的兼容问题。
+有了WSGI，你不用再因为你使用的web 框架而去选择特定的 web server软件。
+常见的web应用框架有：Django，Flask等
+常用的web服务器软件有：uWSGI，Gunicorn等
+
+WSGI 对于 application 对象有如下三点要求
+必须是一个可调用的对象
+接收两个必选参数environ、start_response。
+返回值必须是可迭代对象，用来表示http body。
+
 https://stxnext.com/blog/2019/05/31/flask-vs-django-comparison/
 ### Django
 
