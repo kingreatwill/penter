@@ -89,7 +89,9 @@ def demo5():
 def demo6():
     import face_recognition
     import cv2
-
+    # 定义编码方式并创建VideoWriter对象
+    fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+    outfile = cv2.VideoWriter('output.avi', fourcc, 25., (640, 480))
     video_capture = cv2.VideoCapture(0)  # r"E:\bigdata\ai\video\output_logo.mp4"
 
     obama_img = face_recognition.load_image_file(r"C:\Users\35084\Pictures\Camera Roll\jinwei.jpg")
@@ -132,8 +134,8 @@ def demo6():
 
             cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), 2)
             font = cv2.FONT_HERSHEY_DUPLEX
-            cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
-
+            cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (105, 225, 65), 1)
+        outfile.write(frame)  # 写入文件
         cv2.imshow('Video', frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):

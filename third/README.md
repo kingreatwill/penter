@@ -17,6 +17,58 @@ https://pillow.readthedocs.io/en/stable/handbook/tutorial.html
 ### OpenCV-Python
 pip install opencv-python
 
+### 人脸识别
+https://ai.arcsoft.com.cn/manual/docs#/89
+https://www.zhihu.com/question/19561362
+人脸检测-》检测人脸位置，锁定人脸坐标
+人脸跟踪-》精确定位并跟踪面部区域位置
+人脸比对-》比较两张人脸的相似度
+人脸查找-》在人脸库中查找相似的人脸
+人脸属性-》检测人脸性别、年龄、情绪等属性
+活体检测-》检测是否真人，预防恶意攻击
+
+场景：
+智能楼宇-》人脸闸机、门禁、门锁
+智慧零售-》人脸会员机制、人脸支付
+智慧教育-》人脸考勤、人证考场验证等
+智能机器人-》人脸迎宾、人脸个性化服务
+智慧旅游-》人脸闸机、人脸购票、验票
+智慧金融-》远程人脸开户、刷脸取款
+车牌等识别
+货架商品识别与管理
+
+智能安防  智慧城市 智慧工地 智慧电力 智慧工厂 智慧城管 智慧油田  智慧校园 智慧交通 智慧家园
+视频告警
+视频诊断
+视频运维
+安全帽识别（口罩）
+烟火检测
+
+
+别墅 家庭防止小偷
+重点的街道、路口进行违章摆摊、违停进行检测，公共设施防被盗
+海上漂浮物监测、人群聚集，跟随
+玩手机检测
+公路违停 逆行等
+危险区域，周界入侵报警
+高速公路团雾告警
+睡岗离岗检测
+定时间未检修告警
+违规载人检测
+重点车辆监控
+交通信号优化
+智能信号灯（根据车流量）
+交通事件感知
+
+
+
+### 开源
+https://github.com/davidsandberg/facenet
+https://github.com/ageitgey/face_recognition
+https://github.com/cmusatyalab/openface
+
+https://github.com/ChanChiChoi/awesome-Face_Recognition
+
 ## http
 Requests
 

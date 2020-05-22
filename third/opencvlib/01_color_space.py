@@ -1,4 +1,6 @@
 import cv2
+
+
 # https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html
 
 def demo1():
@@ -21,6 +23,8 @@ HSV是一个常用于颜色识别的模型，相比BGR更易区分颜色，转�
 经验之谈：OpenCV中色调H范围为[0,179]，饱和度S是[0,255]，明度V是[0,255]。
 虽然H的理论数值是0°~360°，但8位图像像素点的最大值是255，所以OpenCV中除以了2，某些软件可能使用不同的尺度表示，所以同其他软件混用时，记得归一化。
 """
+
+
 # 只保留蓝色部分
 def demo2():
     import numpy as np
@@ -49,6 +53,7 @@ def demo2():
         if cv2.waitKey(1) == ord('q'):
             break
 
+
 """
 HSV介绍
 HSV分别代表，色调（H：hue），饱和度（S：saturation），亮度（V：value），由A. R. Smith在1978年创建的一种颜色空间, 也称六角锥体模型(Hexcone Model)；
@@ -66,6 +71,7 @@ HSV分别代表，色调（H：hue），饱和度（S：saturation），亮度�
 使用高斯模糊优化图片；
 图片展示；
 """
+
 
 # 对象提取2 https://www.cnblogs.com/vipstone/p/9127383.html
 def demo3():
@@ -104,4 +110,62 @@ def demo3():
 
     cv2.destroyAllWindows()
 
-demo3()
+
+# https://zhuanlan.zhihu.com/p/107232802
+# https://blog.csdn.net/weixin_42137700/article/details/104749347
+# 口罩提取
+def demo4():
+    # HSV转换（颜色提取）
+
+    import cv2
+    import dlib
+    import numpy as np
+    detector = dlib.get_frontal_face_detector()  # 获取人脸分类器
+    img = cv2.imread(r"C:\Users\35084\Pictures\Camera Roll\mask.jpg", cv2.IMREAD_COLOR)
+    cv2.namedWindow("original", cv2.WINDOW_AUTOSIZE)
+    cv2.imshow("original", img)
+    b, g, r = cv2.split(img)  # 分离三个颜色通道
+    img2 = cv2.merge([r, g, b])  # 融合三个颜色通道生成新图片
+    dets = detector(img, 1)  # 使用detector进行人脸检测 dets为返回的结果
+    for index, face in enumerate(dets):
+        # 在图片中标注人脸，并显示
+        left = face.left()
+        top = face.top()
+        right = face.right()
+        bottom = face.bottom()
+        # 绘制边框
+        #cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 0), 3)
+        # (x,y), (宽度width, 高度height)
+        # pos_start = tuple([left, top])
+        # pos_end = tuple([right, bottom])
+        # 计算矩形框大小
+        height = bottom - top
+        width = right - left
+        new_img = img[top - 10: top + height + 10, left - 10: left + width + 10]
+        # 显示人脸
+        cv2.namedWindow("face", cv2.WINDOW_AUTOSIZE)
+        cv2.imshow("face", new_img)
+        # BGR2HSV
+        hsv = cv2.cvtColor(new_img, cv2.COLOR_BGR2HSV)
+        # 在PS里用取色器的HSV
+        psHSV = [215, 72, 95]
+        diff = 30  # 上下浮动值
+        # 因为PS的HSV（HSB）取值是：0~360、0~1、0~1，而OpenCV的HSV是：0~180、0~255、0~255，所以要对ps的hsv进行处理，H/2、SV*255
+        lowerHSV = [(psHSV[0] - diff) / 2, (psHSV[1] - diff) * 255 / 100,
+                    (psHSV[2] - diff) * 255 / 100]
+        upperHSV = [(psHSV[0] + diff) / 2, (psHSV[1] + diff) * 255 / 100,
+                    (psHSV[2] + diff) * 255 / 100]
+
+        mask = cv2.inRange(hsv, np.array(lowerHSV), np.array(upperHSV))
+        # 使用位“与运算”提取颜色部分
+        res = cv2.bitwise_and(new_img, new_img, mask=mask)
+        # 使用高斯模式优化图片
+        # res = cv2.GaussianBlur(res, (5, 5), 1)
+        cv2.namedWindow("mask", cv2.WINDOW_AUTOSIZE)
+        cv2.imshow('mask', res)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+demo4()
