@@ -135,7 +135,7 @@ def demo6():
             cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), 2)
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (105, 225, 65), 1)
-        outfile.write(frame)  # 写入文件
+        #outfile.write(frame)  # 写入文件
         cv2.imshow('Video', frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -144,5 +144,5 @@ def demo6():
     video_capture.release()
     cv2.destroyAllWindows()
 
-
-demo6()
+if __name__ =="__main__":
+    demo6()

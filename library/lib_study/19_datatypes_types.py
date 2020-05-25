@@ -22,7 +22,7 @@ print(point9)
 print("------------动态类型创建-types.new_class(name, bases=(), kwds=None, exec_body=None)")
 
 
-def test_prepare_class():
+def prepare_class():
     # Basic test of metaclass derivation
     expected_ns = {}
 
@@ -42,12 +42,12 @@ def test_prepare_class():
     print(len(kwds) == 0)
 
 
-test_prepare_class()
+prepare_class()
 
 print(types.resolve_bases([Point, object]))
 print("-------------")
 print(types.FunctionType)
-print(isinstance(test_prepare_class, types.FunctionType))
+print(isinstance(prepare_class, types.FunctionType))
 print(types.CodeType)
 print(types.LambdaType)
 print(types.GeneratorType)
@@ -84,7 +84,6 @@ d = {'a': 1, 'b': 2}
 sn = types.SimpleNamespace(**d)  # 这里的**不可以少,表示命名关键字参数
 print(sn)
 print(sn.a)
-
 print("-----------types.DynamicClassAttribute 在类上访问 __getattr__ 的路由属性")
 
 
