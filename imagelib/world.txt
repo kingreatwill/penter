@@ -1,0 +1,330 @@
+学会这些 Python 美图技巧，就等着女朋友夸你吧
+Python开发者 昨天
+以下文章来源于ZackSock ，作者ZackSock
+
+
+（给Python开发者加星标，提升Python技能）
+
+来源：ZackSock（本文来自作者投稿）
+
+一、前言
+Python中有许多用于图像处理的库，像是Pillow，或者是OpenCV。而很多时候感觉学完了这些图像处理模块没有什么用，其实只是你不知道怎么用罢了。今天就给大家带了一些美图技巧，让你的图美翻全场，朋友圈赞不绝口，女朋友也夸你，富贵你好厉害啊！
+
+二、模块安装
+我们主要使用到OpenCV和Pillow，另外我们还会使用到wordcloud和paddlehub，我们先安装一下：
+
+pip install opencv-python
+pip install pillow
+python -m pip install paddlepaddle -i https://mirror.baidu.com/pypi/simple
+pip install -i https://mirror.baidu.com/pypi/simple paddlehub
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ myqr
+另外我使用的Python环境是3.7，知道这些我们就可以开始进行我们的美图之旅了。
+
+三、图片美化
+
+
+1、祛痘
+还在为痘痘犯难，不敢拍照吗？有了这个你就不用怕了（虽然有p图软件，但是大家不要揭穿我）：
+
+import cv2
+level = 22    # 降噪等级
+img = cv2.imread('girl.jpg')    # 读取原图
+img = cv2.bilateralFilter(img, level, level*2, level/2)    # 美颜
+cv2.imwrite('result.jpg', img)
+实际上，在光滑的脸蛋上，痘痘就可以视为一个噪点，而我们可以通过降噪的方式达到祛痘祛斑的效果，在OpenCV中就提供了相应的滤镜，我们只需要调用即可。原图和实现效果图对比如下：
+
+在这里插入图片描述
+
+
+可以看到脸上的斑明显是变少了。绅士们应该可以注意到，脖子下面的皮肤光滑了许多。不过头发细节被抹除了不少。我们可以通过调节level参数，调节效果。如果想效果更好，可以结合人脸识别，进行局部的祛痘处理。
+
+
+
+2、词云——我不只是一张图
+其实词云已经是老生常谈了，但是作美图中的姣姣者，还是有必要列出来的，因为一张词云所能包含的信息太多了：
+
+from PIL import Image
+import numpy as np
+from wordcloud import WordCloud, ImageColorGenerator
+
+# 读取背景图片
+mask = np.array(Image.open('rose.png'))
+
+# 定义词云对象
+wc = WordCloud(
+    # 设置词云背景为白色
+    background_color='white',
+    # 设置词云最大的字体
+    max_font_size=30,
+    # 设置词云轮廓
+    mask=mask,
+    # 字体路径，如果需要生成中文词云，需要设置该属性，设置的字体需要支持中文
+    #font_path='msyh.ttc'
+)
+# 读取文本
+text = open('article.txt', 'r', encoding='utf-8').read()
+# 生成词云
+wc.generate(text)
+# 给词云上色
+wc = wc.recolor(color_func=ImageColorGenerator(mask))
+# 保存词云
+wc.to_file('result.png')
+其中article.txt为我们的词云的文本素材，而rose.png则是词云轮廓（该图片背景应该为严格的白色或者透明），原图和实现效果如下：
+
+
+
+
+还是非常美的。更多详细内容可以参考https://blog.csdn.net/ZackSock/article/details/103517841。
+
+
+
+3、风格迁移——努力变成你喜欢的样子
+风格迁移，顾名思义就是将某一张图片的风格迁移到另一张图片上。比如我拍了一张白天的图片，但是我想要一张夜景的图片，那我们该怎么做呢？当然是等到晚上再拍了，不过除了这个方法，我们还可以下载一张夜景图片，将夜景效果迁移到我们的原图上。
+
+风格迁移的实现需要使用深度学习才能实现，但是像我这样的菜鸡肯定是不会深度学习的啦，所以我们直接使用paddlehub中已经实现好的模型库：
+
+import cv2
+import paddlehub as hub
+# 加载模型库
+stylepro_artistic = hub.Module(name="stylepro_artistic")
+# 进行风格迁移
+im = stylepro_artistic.style_transfer(
+    images=[{
+            # 原图
+            'content': cv2.imread("origin.jpg"),
+            # 风格图
+            'styles': [cv2.imread("style.jpg")]
+        }],
+    # 透明度
+    alpha = 0.1
+)
+# 从返回的数据中获取图片的ndarray对象
+im = im[0]['data']
+# 保存结果图片
+cv2.imwrite('result.jpg', im)
+原图风格图和效果图如下：
+
+
+
+
+左边是原图，中间是风格图，右边为效果图。上面的效果还算可以，但是不是每次都怎么成功，还是要多试试。
+
+
+
+4、图中图——每一个像素都是你
+这个相比上面的要复杂一些，我们需要准备图库，将这些图作素材，然后根据图片某个区域的主色调进行最适当的替换，代码如下：
+
+import os
+import cv2
+import numpy as np
+
+def getDominant(im):
+    """获取主色调"""
+    b = int(round(np.mean(im[:, :, 0])))
+    g = int(round(np.mean(im[:, :, 1])))
+    r = int(round(np.mean(im[:, :, 2])))
+    return (b, g, r)
+
+
+def getColors(path):
+    """获取图片列表的色调表"""
+    colors = []
+
+    filelist = [path + i for i in os.listdir(path)]
+    for file in filelist:
+        im = cv2.imdecode(np.fromfile(file, dtype=np.uint8), -1)
+        dominant = getDominant(im)
+        colors.append(dominant)
+    return colors
+
+
+def fitColor(color1, color2):
+    """返回两个颜色之间的差异大小"""
+    b = color1[0] - color2[0]
+    g = color1[1] - color2[1]
+    r = color1[2] - color2[2]
+    return abs(b) + abs(g) + abs(r)
+
+
+def generate(im_path, imgs_path, box_size, multiple=1):
+    """生成图片"""
+
+    # 读取图片列表
+    img_list = [imgs_path + i for i in os.listdir(imgs_path)]
+
+    # 读取图片
+    im = cv2.imread(im_path)
+    im = cv2.resize(im, (im.shape[1]*multiple, im.shape[0]*multiple))
+
+    # 获取图片宽高
+    width, height = im.shape[1], im.shape[0]
+
+    # 遍历图片像素
+    for i in range(height // box_size+1):
+        for j in range(width // box_size+1):
+
+            # 图块起点坐标
+            start_x, start_y = j * box_size, i * box_size
+
+            # 初始化图片块的宽高
+            box_w, box_h = box_size, box_size
+
+            box_im = im[start_y:, start_x:]
+            if i == height // box_size:
+                box_h = box_im.shape[0]
+            if j == width // box_size:
+                box_w = box_im.shape[1]
+
+            if box_h == 0 or box_w == 0:
+                continue
+
+            # 获取主色调
+            dominant = getDominant(im[start_y:start_y+box_h, start_x:start_x+box_w])
+
+            img_loc = 0
+            # 差异，同主色调最大差异为255*3
+            dif = 255 * 3
+
+            # 遍历色调表，查找差异最小的图片
+            for index in range(colors.__len__()):
+                if fitColor(dominant, colors[index]) < dif:
+                    dif = fitColor(dominant, colors[index])
+                    img_loc = index
+
+            # 读取差异最小的图片
+            box_im = cv2.imdecode(np.fromfile(img_list[img_loc], dtype=np.uint8), -1)
+
+            # 转换成合适的大小
+            box_im = cv2.resize(box_im, (box_w, box_h))
+
+            # 铺垫色块
+            im[start_y:start_y+box_h, start_x:start_x+box_w] = box_im
+
+            j += box_w
+        i += box_h
+
+    return im
+
+
+if __name__ == '__main__':
+
+    # 获取色调列表
+    colors = getColors('表情包/')
+    result_im = generate('main.jpg', '表情包/', 50, multiple=5)
+    cv2.imwrite('C:/Users/zaxwz/Desktop/result.jpg', result_im)
+关于实现，我后续会写文章详细分析。我们看看效果图：
+
+
+
+
+图片我们还是可以看出人物的，但是某些地方颜色不太对，这就是根据我们图库来的了。我们放大图片就能看到上面几百张小图片。（当然你放大上面的图是看不到的，因为分辨率太低）
+
+
+
+5、切换背景——带你去旅行
+最近大家都宅家里，照片拍了不少，可惜背景全是沙发。遇到我就是你女朋友的福气，看我如何10行代码换图片背景：
+
+from PIL import Image
+import paddlehub as hub
+# 加载模型
+humanseg = hub.Module(name='deeplabv3p_xception65_humanseg')
+# 抠图
+results = humanseg.segmentation(data={'image':['xscn.jpeg']})
+# 读取背景图片
+bg = Image.open('bg.jpg')
+# 读取原图
+im = Image.open('humanseg_output/xscn.png').convert('RGBA')
+im.thumbnail((bg.size[1], bg.size[1]))
+# 分离通道
+r, g, b, a = im.split()
+# 将抠好的图片粘贴到背景上
+bg.paste(im, (bg.size[0]-bg.size[1], 0), mask=a)
+bg.save('xscn.jpg')
+下面看看我们的效果：
+
+在这里插入图片描述
+
+6、九宫格——一张照片装不下你的美
+很多人发照片都喜欢发九宫格，但是一般又没那么多照片，这个时候就需要用表情包占位了。对于技术宅，这种不合理的方式是绝不容许的，于是我们写下如下代码：
+
+from PIL import Image
+# 读取图片
+im = Image.open('xscn.jpeg')
+# 宽高各除 3，获取裁剪后的单张图片大小
+width = im.size[0]//3
+height = im.size[1]//3
+# 裁剪图片的左上角坐标
+start_x = 0
+start_y = 0
+# 用于给图片命名
+im_name = 1
+# 循环裁剪图片
+for i in range(3):
+    for j in range(3):
+        # 裁剪图片并保存
+        crop = im.crop((start_x, start_y, start_x+width, start_y+height))
+        crop.save(str(im_name) + '.jpg')
+        # 将左上角坐标的 x 轴向右移动
+        start_x += width
+        im_name += 1
+    # 当第一行裁剪完后 x 继续从 0 开始裁剪
+    start_x = 0
+    # 裁剪第二行
+    start_y += height
+我们执行上面的代码后，就能生成名为1~9的图片，这些图片就是我们的九宫格图片，下面看看测试效果：
+
+在这里插入图片描述
+在这里插入图片描述
+
+不得不说，小松菜奈是真的美。
+
+
+
+7、图片二维码——冰冷的图里也饱含深情
+有话想说又不敢说？来试试二维码吧，小小的图饱含深情：
+
+from MyQR import myqr
+myqr.run(
+    words='http://www.baidu.com',    # 包含信息
+    picture='lbxx.jpg',            # 背景图片
+    colorized=True,            # 是否有颜色，如果为False则为黑白
+    save_name='code.png'    # 输出文件名
+)
+效果图如下：
+
+在这里插入图片描述
+在这里插入图片描述
+
+因为上面的二维码经过我的特殊处理，在你扫码的时候会发现上面是码中码中码，要扫很多遍才能获得最后结果，大家可以发挥自己的想象力，做出点有趣的东西。
+
+
+
+看到这里，我猜会有童鞋问「我差不多已经学会了，请问女朋友在哪里领？」
+
+推荐关注二条的「面向对象」栏目，我们公号会时不时扩散小姐姐。
+
+
+
+推荐阅读  点击标题可跳转
+整理了 25 个 Pandas 实用技巧
+
+10 个必会的 PyCharm 技巧
+
+10 个 Python 字符串处理技巧
+
+
+
+
+
+觉得本文对你有帮助？请分享给更多人
+
+关注「Python开发者」加星标，提升Python技能
+
+
+
+好文章，我在看❤️
+
+
+微信扫一扫
+关注该公众号
+
