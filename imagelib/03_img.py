@@ -174,18 +174,19 @@ def demo04():
 
 # 5、切换背景——带你去旅行
 def demo05():
+    import cv2
     from PIL import Image
     import paddlehub as hub
     # 加载模型
     humanseg = hub.Module(name='deeplabv3p_xception65_humanseg')
-    # 抠图
+    # 抠图(只能是人物)
     results = humanseg.segmentation(data={'image': ['./img/lena.jpg']}, visualization=True,
                                     output_dir='humanseg_output')
-
+    # cv2.imwrite('resultxxx.jpg', results[0]["data"])
     # 读取背景图片
     bg = Image.open('./img/bg.jpg')
     # 读取抠图
-    im = Image.open('humanseg_output/lena.png').convert('RGBA')
+    im = Image.open(results[0]["save_path"]).convert('RGBA')
     im.thumbnail((bg.size[1], bg.size[1]))
     # 分离通道
     r, g, b, a = im.split()

@@ -3,6 +3,9 @@
 
 [ Python 第三方包索引](https://pypi.org/)
 
+导入一个文件
+>>> minmax = "/Users/mparsian/spark-1.6.1-bin-hadoop2.6/minmax.py"
+>>> import minmax
 
 ## 生成requirements.txt
 1.
