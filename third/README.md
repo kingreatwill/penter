@@ -18,6 +18,9 @@ https://pillow.readthedocs.io/en/stable/handbook/tutorial.html
 pip install opencv-python
 
 ### 人脸识别
+
+avatarify AI 实时变脸工具 https://github.com/alievk/avatarify
+
 https://ai.arcsoft.com.cn/manual/docs#/89
 https://www.zhihu.com/question/19561362
 人脸检测-》检测人脸位置，锁定人脸坐标
