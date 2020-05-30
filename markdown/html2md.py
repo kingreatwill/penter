@@ -1,6 +1,6 @@
 import os
 import re
-import time
+# import time
 import typing
 
 from selenium import webdriver
@@ -8,7 +8,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 
 import tomd
-import execjs  # pip install PyExecJS
+# import execjs  # pip install PyExecJS
 import requests
 from urllib.parse import urlparse
 from pyquery import PyQuery as pq
@@ -23,7 +23,7 @@ headers = {
 def get_page_source(url, xpath):
     driver = webdriver.Chrome()
     driver.get(url)
-    #time.sleep(3)
+    # time.sleep(3)
     # 等待特定网页元素加载完毕
     is_disappeared = WebDriverWait(driver, 10, 0.5, ignored_exceptions=TimeoutException).until(
         lambda x: x.find_element_by_css_selector(xpath).is_displayed())
@@ -123,31 +123,49 @@ class Html2md:
         return Wanted()
 
     # 转换;
-    def convert(self):
-        contentQ = self.rootQ(self.xpath)
+    def convert(self, name, selector):
+        if not name:
+            name = self.title
+        if not selector:
+            selector = self.xpath
+        # 提取文章内容;
+        contentQ = self.rootQ(selector)
         # 处理图片;
         index = 1
         for e in contentQ(self.rule.img_tag):
             q = pq(e)
             img_src = self.rule.find_img(q)
-            img_src_cur = self.rule.save_pic(self.url, self.title, index, img_src)
+            img_src_cur = self.rule.save_pic(self.url, name, index, img_src)
             if q[0].tag != "img":
                 q.replace_with(pq('<img src="' + img_src_cur + '"/>'))
             else:
                 q.attr(src=img_src_cur)
             index += 1
         # 转换成markdown;
-        self.rule.save_md(self.title, tomd.convert(contentQ))
+        self.rule.save_md(name, tomd.convert(contentQ))
 
+
+import argparse
+
+parser = argparse.ArgumentParser(description='url to markdown.')
+parser.add_argument('urls', metavar='url', type=str, nargs='+',
+                    help='需要转换的url地址')
+parser.add_argument('--name', "-n", help='保存的文件名', required=False)
+parser.add_argument('--selector', "-s", help='post内容选择器', required=False)
+args = parser.parse_args()
 
 if "__main__" == __name__:
-    urls = [
-        "https://www.cnblogs.com/kingreatwill/p/9865945.html",
-        "https://segmentfault.com/a/1190000022777293",
-        "https://cloud.tencent.com/developer/article/1632510",
-        "https://www.toutiao.com/i6827512913318642187/",
-    ]
-    for url in urls:
-        Html2md(url).convert()
+    # urls = [
+    #     "https://www.cnblogs.com/kingreatwill/p/9865945.html",
+    #     "https://segmentfault.com/a/1190000022777293",
+    #     "https://cloud.tencent.com/developer/article/1632510",
+    #     "https://www.toutiao.com/i6827512913318642187/",
+    # ]
+    if len(args.urls) == 1:
+        Html2md(args.urls[0]).convert(name=args.name, selector=args.selector)
+    else:
+        for url in args.urls:
+            Html2md(url).convert("","")
+
     if driver:
         driver.quit()
