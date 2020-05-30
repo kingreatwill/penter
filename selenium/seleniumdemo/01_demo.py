@@ -43,5 +43,6 @@ selenium为了解决这个需进行js 注入
 from selenium import webdriver
 browser = webdriver.Chrome()
 script='''Object.defineProperties(navigator, {webdriver:{get:()=>undefined}})'''
+#js1 = '''() =>{ Object.defineProperties(navigator,{ webdriver:{ get: () => false } }) }'''
 browser.execute_script(script)
 """

@@ -1,29 +1,44 @@
-import asyncio
 import os
 import re
 # import time
 import typing
+
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.wait import WebDriverWait
+
 import tomd
-import puppeteer
 # import execjs  # pip install PyExecJS
 import requests
 from urllib.parse import urlparse
 from pyquery import PyQuery as pq
 from dataclasses import dataclass, field
 
+driver = None
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36'
 }
 
+
+def get_page_source(url, xpath):
+    driver = webdriver.Chrome()
+    driver.get(url)
+    # time.sleep(3)
+    # 等待特定网页元素加载完毕
+    is_disappeared = WebDriverWait(driver, 10, 0.5, ignored_exceptions=TimeoutException).until(
+        lambda x: x.find_element_by_css_selector(xpath).is_displayed())
+    return pq(driver.page_source)
+
+
 @dataclass
 class Wanted:
     img_tag: str = "img"
-    selector: str = ".content"
+    xpath: str = ".content"
     title: typing.Callable = lambda q: q("title").text().split("-")[0]
     find_img: typing.Callable = lambda q: q.attr('src')
-    page_source: typing.Callable = lambda url, selector: pq(url=url,
-                                                            opener=lambda url, **kw: requests.get(url,
-                                                                                                  headers=headers).content)
+    page_source: typing.Callable = lambda url, xpath: pq(url=url,
+                                                         opener=lambda url, **kw: requests.get(url,
+                                                                                               headers=headers).content)
 
     def pathed(self, p):
         pattern = "[`~!@#$%^&-+=\\?:\"|,/;'\\[\\]·~！@#￥%……&*（）+=\\{\\}\\|《》？：“”【】、；‘'，。\\、\\-\s]"
@@ -68,16 +83,17 @@ class Wanted:
             f.write(requests.get(img_url, headers=img_headers).content)
         return "img/" + img_name
 
+
 class Html2md:
-    def __init__(self, url, title="", selector=""):
+    def __init__(self, url, title="", xpath=""):
         self.url = url
         self.title = title
-        self.selector = selector
+        self.xpath = xpath
         self.rule = self.get_rule(self.url)
-        if not self.selector:
-            self.selector = self.rule.selector
+        if not self.xpath:
+            self.xpath = self.rule.xpath
         # get加载页面;
-        self.rootQ = self.rule.page_source(self.url, self.selector)
+        self.rootQ = self.rule.page_source(self.url, self.xpath)
         if not self.title:
             self.title = self.rule.title(self.rootQ)
 
@@ -86,24 +102,24 @@ class Html2md:
         if not url:
             url = self.url
         if "www.cnblogs.com" in url:
-            return Wanted(selector="#cnblogs_post_body")
+            return Wanted(xpath="#cnblogs_post_body")
         if "segmentfault.com" in url:
-            return Wanted(selector=".article.fmt.article-content", find_img=lambda q: q.attr('data-src'))
+            return Wanted(xpath=".article.fmt.article-content", find_img=lambda q: q.attr('data-src'))
         if "blog.csdn.net" in url:
-            return Wanted(selector="#content_views")
+            return Wanted(xpath="#content_views")
         if "www.jianshu.com" in url:
-            return Wanted(selector="article", find_img=lambda q: q.attr('data-original-src'))
+            return Wanted(xpath="article", find_img=lambda q: q.attr('data-original-src'))
         if "mp.weixin.qq.com" in url:
-            return Wanted(selector="#js_content", find_img=lambda q: q.attr('data-src'))
+            return Wanted(xpath="#js_content", find_img=lambda q: q.attr('data-src'))
         if "www.oschina.net" in url:
-            return Wanted(selector=".article-detail")
+            return Wanted(xpath=".article-detail")
         if "cloud.tencent.com" in url:
-            return Wanted(selector=".com-markdown-collpase", img_tag="span.lazy-image-holder",
+            return Wanted(xpath=".com-markdown-collpase", img_tag="span.lazy-image-holder",
                           find_img=lambda q: q.attr('dataurl'))
         if "zhuanlan.zhihu.com" in url:
-            return Wanted(selector=".Post-RichTextContainer", find_img=lambda q: q.attr('data-actualsrc'))
+            return Wanted(xpath=".Post-RichTextContainer", find_img=lambda q: q.attr('data-actualsrc'))
         if "www.toutiao.com" in url or "m.toutiao.com" in url:
-            return Wanted(selector=".article-box", page_source=puppeteer.get_page_source)
+            return Wanted(xpath=".article-box", page_source=get_page_source)
         return Wanted()
 
     # 转换;
@@ -111,7 +127,7 @@ class Html2md:
         if not name:
             name = self.title
         if not selector:
-            selector = self.selector
+            selector = self.xpath
         # 提取文章内容;
         contentQ = self.rootQ(selector)
         # 处理图片;
@@ -144,3 +160,6 @@ if "__main__" == __name__:
     else:
         for url in args.urls:
             Html2md(url).convert()
+
+    if driver:
+        driver.quit()

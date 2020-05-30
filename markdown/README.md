@@ -5,7 +5,7 @@ https://github.com/gaojiuli/tomd   0.466k 最近更新一年前
 https://github.com/aaronsw/html2text 2k 好像8年没有更新了
 
 ```
-python html2md.py "https://www.cnblogs.com/kingreatwill/p/9865945.html" "https://segmentfault.com/a/1190000022777293"
+python html2md.py "https://www.toutiao.com/i6827512913318642187/" "https://segmentfault.com/a/1190000022777293"
 python html2md.py "https://www.cnblogs.com/kingreatwill/p/9865945.html" -n filename
 python html2md.py "https://www.cnblogs.com/kingreatwill/p/9865945.html" -s ".css"
 ```
