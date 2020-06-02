@@ -5,9 +5,25 @@ https://github.com/gaojiuli/tomd   0.466k 最近更新一年前
 https://github.com/aaronsw/html2text 2k 好像8年没有更新了
 
 ```
-python html2md.py "https://www.toutiao.com/i6827512913318642187/" "https://segmentfault.com/a/1190000022777293"
-python html2md.py "https://www.cnblogs.com/kingreatwill/p/9865945.html" -n filename
-python html2md.py "https://www.cnblogs.com/kingreatwill/p/9865945.html" -s ".css"
+
+python html2md_selenium.py "https://www.toutiao.com/i6827512913318642187/" "https://segmentfault.com/a/1190000022777293"
+python html2md_selenium.py "https://www.cnblogs.com/kingreatwill/p/9865945.html" -n filename
+python html2md_selenium.py "https://www.cnblogs.com/kingreatwill/p/9865945.html" -s ".css"
+
+
+python html2md.py "https://www.cnblogs.com/kingreatwill/p/9865945.html"
+python html2md.py "https://blog.csdn.net/weixin_33737134/article/details/91773164" -c s
+python html2md.py "https://blog.csdn.net/weixin_33737134/article/details/91773164" -c p -less
+python html2md.py "https://www.toutiao.com/i6827512913318642187/" -c p 
+
+python html2md.py filename
+type filename | python html2md.py
+cat filename | python html2md.py
+
+curl -o- https://www.cnblogs.com/kingreatwill/p/9865945.html | python html2md.py
+
+
+html2md https://www.cnblogs.com/kingreatwill/p/9865945.html
 ```
 打包成exe:pyinstaller -F html2md.py
 
