@@ -1,6 +1,6 @@
 import numpy as np
 # 矩阵乘法的几何意义 https://zhuanlan.zhihu.com/p/64606322
-# 矩阵乘法   点积
+# 矩阵乘法  矩阵积 点积  matrix product
 a = np.array([[4, 5], [6, 7]])
 b = np.arange(4).reshape((2, 2))
 print(a)
@@ -17,6 +17,7 @@ print(c_dot)
 c_dot_2 = a.dot(b)
 # [[10 19]
 #  [14 27]]
+print(a @ b)
 
 
 """
