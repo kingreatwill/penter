@@ -2,12 +2,29 @@
 import numpy as np
 import pandas as pd
 
+
+
+
 """
 Numpy 和 Pandas 有什么不同 ¶
 如果用 python 的列表和字典来作比较, 那么可以说 Numpy 是列表形式的，没有数值标签，而 Pandas 就是字典形式。
 Pandas是基于Numpy构建的，让Numpy为中心的应用变得更加简单。
 要使用pandas，首先需要了解他主要两个数据结构：Series和DataFrame。
 """
+
+# 如果是中文路径，可以尝试如上的skipfoot
+# 或者engine=‘python’
+# df = pd.read_csv(path,encoding = 'gbk', engine='python')
+"""
+首先 python文件开始 添加 一行  #-*- coding=utf-8 -*-然后调用的时候 
+pd.read_csv(csvname,encoding="gb2312")然后看看你的python是保存为什么编码的， 
+推荐用notepad++打开，然后转化为utf-8 无BOM格式的。 这样无论在liunx还是window都能保证无乱码。
+
+import pandas as pddf = pd.read_csv("example.csv",encoding="gb2312")   
+这样基本能保证pandas读取中文后不乱吗，最近遇到还有例外的情况，用encoding = ‘gb18030’  就能解决。
+
+"""
+
 
 s = pd.Series([1, 3, 5, np.nan, 6, 8])
 # Series的字符串表现形式为：索引在左边，值在右边。由于我们没有为数据指定索引。于是会自动创建一个0到N-1（N为长度）的整数型索引。
