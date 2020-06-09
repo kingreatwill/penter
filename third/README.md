@@ -65,6 +65,31 @@ https://www.zhihu.com/question/19561362
 
 
 
+dlib也有自己的图片标注工具
+
+
+标注工具labelimg和labelme
+
+矩形标注工具：labelimg
+多边形标准工具：labelme
+
+
+前者官网发布了可执行文件，后者只有python源码，如果需要编译windows exe，可以这样：
+pip install labelme
+
+然后运行labelme确保程序可以正常执行
+
+下载源码：
+
+cd  D:\github\wkentaro\labelme-3.16.7
+
+pip install .
+
+pip install pyinstaller
+
+pyinstaller labelme.spec
+
+
 ### 开源
 https://github.com/davidsandberg/facenet
 https://github.com/ageitgey/face_recognition

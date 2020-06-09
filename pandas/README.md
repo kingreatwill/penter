@@ -36,3 +36,7 @@ DataFrame是Pandas中的一个表格型的数据结构，包含有一组有序�
 ## 利器之一：Series
 
 它是一种类似于一维数组的对象，是由一组数据(各种NumPy数据类型)以及一组与之相关的数据标签(即索引)组成。仅由一组数据也可产生简单的Series对象。
+
+## 分布式计算框架
+https://github.com/mars-project/mars
+https://github.com/databricks/koalas
