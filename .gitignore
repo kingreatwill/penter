@@ -104,3 +104,5 @@ venv.bak/
 .mypy_cache/
 
 .idea
+/tensorflow_v2/mnist_cnn/data_set_tf2/
+/tensorflow_v2/mnist_cnn/ckpt/
