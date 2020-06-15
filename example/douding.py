@@ -117,7 +117,7 @@ def save_pdf(path):
 word_url = input('请输入豆丁网文档网址：\n>')
 path = os.getcwd()
 
-if "jz.docin.com" in word_url:
+if "jz.docin.com" in word_url or "www.docin.com" in word_url:
     title = get_docin_pic(word_url)
 elif "wenku.baidu.com" in word_url:
     title = get_baiduwenku_pic(word_url)
