@@ -22,3 +22,9 @@ https://github.com/mwaskom/seaborn
 https://seaborn.pydata.org/
 这是另一个可视化工具，但这个工具更侧重于统计结果的可视化，比如直方图、饼图、曲线图或相关性表等。
 Seaborn是一个基于matplotlib的Python数据可视化库。它提供了一个高级界面，以绘制吸引和信息统计图形。
+
+
+
+bashplotlib
+控制台中绘图
+https://github.com/glamp/bashplotlib

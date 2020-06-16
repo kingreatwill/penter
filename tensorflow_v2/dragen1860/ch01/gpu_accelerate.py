@@ -18,7 +18,7 @@ import timeit
 
 cpu_data = []
 gpu_data = []
-for n in range(9):
+for n in range(8):
 	n = 10**n
 	# 创建在CPU上运算的2个矩阵
 	with tf.device('/cpu:0'):
@@ -54,7 +54,7 @@ for n in range(9):
 
 	del cpu_a,cpu_b,gpu_a,gpu_b
 
-x = [10**i for i in range(9)]
+x = [10**i for i in range(8)]
 cpu_data = [1000*i for i in cpu_data]
 gpu_data = [1000*i for i in gpu_data]
 plt.plot(x, cpu_data, 'C1')
