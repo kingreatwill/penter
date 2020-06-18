@@ -1,0 +1,1 @@
+# https://github.com/61Duke/recommend_system_learning/blob/master/word2vecor_recommend_main.py
