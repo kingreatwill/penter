@@ -1,7 +1,7 @@
 # -*- coding:utf-8-*-
 """
 利用surprise推荐库 KNN协同过滤算法推荐网易云歌单
-python2.7环境
+python3.7环境 https://blog.csdn.net/Tong_T/article/details/80354512
 """
 from __future__ import (absolute_import, division, print_function, unicode_literals)
 import os
@@ -86,3 +86,4 @@ music_data = Dataset.load_from_file(file_path, reader=reader)
 algo = KNNBasic()
 perf = cross_validate(algo, music_data, measures=['RMSE', 'MAE'], cv=5, verbose=True)
 print(perf)
+# 回归算法的评价指标MSE（均方误差），RMSE（均方根误差），MAE（平均绝对误差）
