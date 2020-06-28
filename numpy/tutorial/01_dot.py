@@ -19,7 +19,7 @@ c_dot_2 = a.dot(b)
 #  [14 27]]
 print(a @ b)
 
-
+print(a * b)
 """
 a1,1 * b1,1 + a1,2 * b2,1 + a1,n * bn,1  ,  a1,1 * b1,2 + a1,2 * b2,2 + a1,n * bn,2
 a2,1 * b1,1 + a2,2 * b2,1 + a2,n * bn,1  ,  a2,1 * b1,2 + a2,2 * b2,2 + a2,n * bn,2
