@@ -11,7 +11,7 @@ from cassandra.cluster import Cluster
 
 
 CONCURRENCY_LEVEL = 32
-TOTAL_QUERIES = 10000
+TOTAL_QUERIES = 1000000
 COUNTER = 0
 COUNTER_LOCK = threading.Lock()
 
@@ -55,3 +55,5 @@ end = time.time()
 
 print("Finished executing {} queries with a concurrency level of {} in {:.2f} seconds.".
       format(TOTAL_QUERIES, CONCURRENCY_LEVEL, (end-start)))
+
+# docker  1w数据 3.18s  100W 257.28 seconds.  可以看到数据量并没有影响插入性能

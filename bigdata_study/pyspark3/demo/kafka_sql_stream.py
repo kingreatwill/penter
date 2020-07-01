@@ -5,7 +5,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import explode, window
 from pyspark.sql.functions import split
 
-
+# http://spark.apache.org/docs/latest/structured-streaming-kafka-integration.html
 if __name__ == "__main__":
     bootstrapServers = "192.168.110.150:9092,192.168.110.151:9092,192.168.110.152:9092"
     subscribeType = "subscribe"

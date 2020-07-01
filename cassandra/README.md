@@ -78,3 +78,67 @@ CREATE KEYSPACE excalibur
     
 SELECT * FROM system.schema_keyspaces;
 
+
+CREATE TABLE sample_times (a int, b timestamp, c timeuuid, d bigint, PRIMARY KEY (a,b,c,d));
+INSERT INTO sample_times (a,b,c,d) VALUES (1, toUnixTimestamp(now()), 50554d6e-29bb-11e5-b345-feff819cdc9f, toTimestamp(now()));
+
+INSERT INTO sample_times (a,b,c,d) VALUES (2, toUnixTimestamp(now()), now(), toTimestamp(now()));
+
+SELECT a, b, toDate(c), toDate(d) FROM sample_times
+
+
+
+CREATE TABLE user_articles (
+    user_id uuid,
+    uploaded_date timestamp,
+    article_id uuid,
+    title test,
+    abstract test,
+    PRIMARY KEY (user_id, uploaded_date, article_id)
+) WITH CLUSTERING ORDER BY (uploaded_date DESC, article_id ASC);
+
+SELECT *
+FROM user_articles
+WHERE user_id = 12345
+ORDER BY uploaded_date DESC;
+
+
+Apache Cassandra 各种 key 介绍:https://zhuanlan.zhihu.com/p/64898337
+"""
+CREATE TABLE cc.cc_customers (
+    id text PRIMARY KEY,
+    county text,
+    name text
+);
+
+CREATE TABLE cc.cc_transactions (
+    customerid text,
+    year int,
+    month int,
+    id timeuuid,
+    amount int,
+    card text,
+    status text,
+    PRIMARY KEY ((customerid, year, month), id)
+);
+CREATE TABLE cc.cc_balance (
+    customerid text,
+    card text,
+    balance int,
+    updated_at timestamp,
+    PRIMARY KEY ((customerid, card))
+);
+
+/* 1*/    val includedStatuses = Set("COMPLETED", "REPAID")
+/* 2*/    val now = new Date();
+/* 3*/    sc.cassandraTable("cc", "cc_transactions")
+/* 4*/      .select("customerid", "amount", "card", "status", "id")
+/* 5*/      .where("id < minTimeuuid(?)", now)
+/* 6*/      .filter(includedStatuses contains _.getString("status"))
+/* 7*/      .keyBy(row => (row.getString("customerid"), row.getString("card")))
+/* 8*/      .map { case (key, value) => (key, value.getInt("amount")) }
+/* 9*/      .reduceByKey(_ + _)
+/*10*/      .map { case ((customerid, card), balance) => (customerid, card, balance, now) }
+/*11*/      .saveToCassandra("cc", "cc_balance", SomeColumns("customerid", "card", "balance", "updated_at"))
+"""
+
