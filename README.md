@@ -22,7 +22,7 @@ pip freeze > requirements.txt
 //pip install pycryptodome -i https://pypi.doubanio.com/simple/
 //pip install -i https://pypi.doubanio.com/simple/ -r requirements.txt
 ```
-2.
+2. pipreqs、pigar、pip-tools、pipdeptree https://zhuanlan.zhihu.com/p/89756247
 ```
 pip install pipreqs
 // 生成

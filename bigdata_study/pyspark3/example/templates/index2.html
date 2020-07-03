@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <script src="/static/socket.io.js"></script>-->
+<!--    <script src="/static/jquery.min.js"></script>-->
+    <script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript"
+            src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+      <script type="text/javascript" charset="utf-8">
+
+    let chart = {
+        paint: function () {
+            let dom = document.getElementById("container");
+            let myChart = echarts.init(dom);
+            if (!window.myChart) {
+                window.myChart = myChart;
+            }
+
+            let option = {
+                angleAxis: {},
+                radiusAxis: {
+                    type: 'category',
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                    z: 10
+                },
+                polar: {},
+                series: [{
+                    type: 'bar',
+                    data: [0, 0, 0, 0, 0, 0, 0],
+                    coordinateSystem: 'polar',
+                    name: 'A',
+                    stack: 'a'
+                }, {
+                    type: 'bar',
+                    data: [0, 0, 0, 0, 0, 0, 0],
+                    coordinateSystem: 'polar',
+                    name: 'B',
+                    stack: 'a'
+                }, {
+                    type: 'bar',
+                    data: [0, 0, 0, 0, 0, 0, 0],
+                    coordinateSystem: 'polar',
+                    name: 'C',
+                    stack: 'a'
+                }],
+                legend: {
+                    show: true,
+                    data: ['深圳东站', '深圳南站', '深圳北站']
+                }
+            };
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+        }
+    };
+
+        $(document).ready(function() {
+            chart.paint();
+            namespace = '/test';
+            var socket = io(namespace);
+            socket.on('connect', function () {
+                console.log('连接正常!');
+            });
+            socket.on('send_message', function (message, cb) {
+                console.log(message.data);
+                if (!window.chart_data) {
+                    window.chart_data = {};
+                }
+                let msg = message.data.split(",");
+                window.chart_data[msg[0]] = msg.slice(1, 8);
+
+                if (window.myChart) {
+                    window.myChart.setOption({
+                        series: [{
+                            type: 'bar',
+                            data: window.chart_data['深圳东站'],
+                            coordinateSystem: 'polar',
+                            name: '深圳东站',
+                            stack: 'a'
+                        }, {
+                            type: 'bar',
+                            data: window.chart_data['深圳南站'],
+                            coordinateSystem: 'polar',
+                            name: '深圳南站',
+                            stack: 'a'
+                        }, {
+                            type: 'bar',
+                            data: window.chart_data['深圳北站'],
+                            coordinateSystem: 'polar',
+                            name: '深圳北站',
+                            stack: 'a'
+                        }]
+                    });
+                }
+
+            }
+        );
+
+        socket.on('connected', function () {
+            console.log('connected');
+        });
+
+        socket.on('disconnect', function () {
+            console.log('disconnect');
+        });
+
+        });
+    </script>
+</head>
+<body style="height: 100%; margin: 0;">
+<h1>深圳车站-人流量实时预警</h1>
+<div id="container" style="height: 100%;min-height: 500px;"></div>
+
+<div id="sse">
+
+</div>
+</body>
+</html>
