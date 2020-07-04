@@ -9,10 +9,11 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, \
 # different async modes, or leave it set to None for the application to choose
 # the best option based on installed packages.
 async_mode = None
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
+# socketio=SocketIO(app,message_queue='redis://') # 'redis://'      'amqp://'  'kafka://'
+# Flask-socketio多workers实现 ： https://www.jianshu.com/p/3c3e18456ccc
 thread = None
 thread_lock = Lock()
 

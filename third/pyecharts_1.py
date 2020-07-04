@@ -9,6 +9,12 @@ bar.add_yaxis("商家A", [5, 20, 36, 10, 75, 90])
 # 也可以传入路径参数，如 bar.render("mycharts.html")
 bar.render()
 
+"""
+bar.render_notebook()#在Notebook中进行渲染图像
+#bar.render("1.html")#在本地生成静态网页
+#make_snapshot(snapshot, bar.render(), "bar.png")#在本地生成图表截图
+"""
+
 # bar = (
 #     Bar()
 #     .add_xaxis(["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"])
