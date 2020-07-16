@@ -1,4 +1,10 @@
 
+
+# --jars E:\elastic\canal\canal.admin-1.1.4.tar\canal.admin-1.1.4\lib\mysql-connector-java-5.1.40.jar
+# properties = { 'user' : 'x', 'password' : 'x',"driver" :"com.mysql.jdbc.Driver" }
+# tb = spark.read.jdbc("jdbc:mysql://192.168.1.x:3306/x",table="x",properties=properties)
+# tb.show()
+
 """
 
 //按limit分页
