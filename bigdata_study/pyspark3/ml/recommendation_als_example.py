@@ -85,7 +85,7 @@ if __name__ == "__main__":
     # 训练模型
     model = als.fit(training)
 
-    # 模型评估：计算RMSE，均方根误差
+    # 模型评估：计算RMSE，均方根误差 就是MSE开根号
     # RMSE（均方根误差）、MSE（均方误差）、MAE（平均绝对误差）、SD（标准差）
     # 比如考试：总分都是600，你有的满分有的不及格，那么RMSE就大，越小越好
     # Evaluate the model by computing the RMSE on the test data
@@ -95,14 +95,19 @@ if __name__ == "__main__":
     rmse = evaluator.evaluate(predictions)
     print("Root-mean-square error = " + str(rmse))
 
+    # 为每个用户生成前10部电影推荐
     # Generate top 10 movie recommendations for each user
     userRecs = model.recommendForAllUsers(10)
+    # 为每部电影生成前10名用户推荐
     # Generate top 10 user recommendations for each movie
     movieRecs = model.recommendForAllItems(10)
 
+    # 为指定的一组用户生成前10个电影推荐
     # Generate top 10 movie recommendations for a specified set of users
     users = ratings.select(als.getUserCol()).distinct().limit(3)
     userSubsetRecs = model.recommendForUserSubset(users, 10)
+
+    # 为指定的一组电影生成前10个用户推荐
     # Generate top 10 user recommendations for a specified set of movies
     movies = ratings.select(als.getItemCol()).distinct().limit(3)
     movieSubSetRecs = model.recommendForItemSubset(movies, 10)
