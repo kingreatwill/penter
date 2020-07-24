@@ -5,8 +5,8 @@ from pyspark.sql import SparkSession
 # https://github.com/datastax/spark-cassandra-connector/blob/master/doc/15_python.md
 # https://blog.tanka.la/2018/09/06/running-pyspark-with-cassandra-using-spark-cassandra-connector-in-jupyter-notebook/
 
-# Configuratins related to Cassandra connector & Cluster
-os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages com.datastax.spark:spark-cassandra-connector_2.12:3.0.0-alpha2 --conf spark.cassandra.connection.host=127.0.0.1 pyspark-shell'
+# Configuratins related to Cassandra connector & Cluster http://maven.aliyun.com/nexus/content/groups/public/
+os.environ['PYSPARK_SUBMIT_ARGS'] = '--repositories https://maven.aliyun.com/repository/central --packages com.datastax.spark:spark-cassandra-connector_2.12:3.0.0-beta --conf spark.cassandra.connection.host=127.0.0.1 pyspark-shell'
 
 # Configuratins related to Cassandra connector & Cluster
 # os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages com.datastax.spark:spark-cassandra-connector_2.11:2.3.0 --conf spark.cassandra.connection.host=192.168.0.123,192.168.0.124 pyspark-shell'

@@ -206,7 +206,15 @@ def predict():
     print ( "Test Accuracy = " + str( preds[1] ) )
     """
 
+"""
+# Keras中Lstm方法进行时间序列预测 https://github.com/CasiaFan/time_seires_prediction_using_lstm/blob/master/neural_network_run.py
+# 格式
+#('2016-05-03', '09,12,24,28,29,30,02')
 
+#('2016-05-01', '06,08,13,14,22,27,10')
+
+#('2016-04-28', '03,08,13,14,15,30,04')
+"""
 if __name__ == '__main__':
     predict()
     # dnn()

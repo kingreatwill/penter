@@ -6,7 +6,7 @@ python3.7环境 https://blog.csdn.net/Tong_T/article/details/80354512
 from __future__ import (absolute_import, division, print_function, unicode_literals)
 import os
 import csv
-from surprise import KNNBaseline, Reader, KNNBasic, KNNWithMeans
+from surprise import KNNBaseline, Reader, KNNBasic, KNNWithMeans, SVD
 from surprise import Dataset
 from surprise.model_selection import cross_validate
 
@@ -83,7 +83,15 @@ music_data = Dataset.load_from_file(file_path, reader=reader)
 # 分成5折 改成了, cv=5
 # music_data.split(n_folds=5)
 
-algo = KNNBasic()
+# userCF - default
+# itemCF - KNNBasic(sim_options={"user_based": False})
+algo = KNNBasic(sim_options={"user_based": False})
 perf = cross_validate(algo, music_data, measures=['RMSE', 'MAE'], cv=5, verbose=True)
 print(perf)
 # 回归算法的评价指标MSE（均方误差），RMSE（均方根误差），MAE（平均绝对误差）
+
+# algo.fit(music_data.build_full_trainset())
+
+# print(algo.get_neighbors(algo.trainset.to_inner_uid('2150055953'), 10))
+
+print(algo.get_neighbors(algo.trainset.to_inner_iid("424262401"), 3))

@@ -5,3 +5,7 @@
 # · 开发者：Facebook
 # · 2018年10月发布1.0版本
 # · 基于Torch开发（Torch是基于Lua开发的另一个深度学习框架）
+
+# https://github.com/ShusenTang/Dive-into-DL-PyTorch
+
+# https://github.com/xiaotudui/PyTorch-Tutorial

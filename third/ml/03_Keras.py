@@ -7,3 +7,6 @@
 # · 是一个高级API，降低了深度学习框架的复杂程度
 # · 可以在其他深度学习API，如TensorFlow、Theano和CNTK上运行
 # · 本身并不是一个库
+
+
+# tf.keras 和 keras有什么区别？ https://www.zhihu.com/question/313111229

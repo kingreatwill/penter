@@ -106,3 +106,5 @@ venv.bak/
 .idea
 /tensorflow_v2/mnist_cnn/data_set_tf2/
 /tensorflow_v2/mnist_cnn/ckpt/
+/bigdata_study/pyspark3/demo/delta-table/
+/pytorch1.x/logs/

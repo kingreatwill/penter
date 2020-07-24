@@ -38,6 +38,9 @@ DataFrame是Pandas中的一个表格型的数据结构，包含有一组有序�
 它是一种类似于一维数组的对象，是由一组数据(各种NumPy数据类型)以及一组与之相关的数据标签(即索引)组成。仅由一组数据也可产生简单的Series对象。
 
 ## 分布式计算框架
+
+https://github.com/uber/fiber
+
 https://github.com/mars-project/mars
 Mars是由阿里云高级软件工程师秦续业等人开发的一个基于张量的大规模数据计算的统一框架，目前它已在GitHub上开源。
 该工具能用于多个工作站，而且即使在单块CPU的情况下，它的矩阵运算速度也比NumPy(MKL)快。
