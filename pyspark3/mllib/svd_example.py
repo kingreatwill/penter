@@ -22,7 +22,7 @@ from pyspark.mllib.linalg.distributed import RowMatrix
 # $example off$
 
 if __name__ == "__main__":
-    sc = SparkContext(appName="PythonSVDExample")
+    sc = SparkContext(appName="PythonExample")
 
     # $example on$
     rows = sc.parallelize([
