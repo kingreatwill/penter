@@ -11,6 +11,7 @@ tensorflow 2.0.0b0
 class CNN(object):
     def __init__(self):
         model = models.Sequential()
+        # 2D卷积层layers.Conv2D
         # 第1层卷积，卷积核大小为3*3，32个，28*28为待训练图片的大小
         model.add(layers.Conv2D(
             32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
@@ -20,8 +21,9 @@ class CNN(object):
         model.add(layers.MaxPooling2D((2, 2)))
         # 第3层卷积，卷积核大小为3*3，64个
         model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-
+        # Flatten压平
         model.add(layers.Flatten())
+        # Dense全连接降维层
         model.add(layers.Dense(64, activation='relu'))
         model.add(layers.Dense(10, activation='softmax'))
 

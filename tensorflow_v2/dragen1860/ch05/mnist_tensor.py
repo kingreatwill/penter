@@ -1,39 +1,37 @@
-#%%
-import  matplotlib
-from    matplotlib import pyplot as plt
+# %%
+import matplotlib
+from matplotlib import pyplot as plt
+
 # Default parameters for plots
 matplotlib.rcParams['font.size'] = 20
 matplotlib.rcParams['figure.titlesize'] = 20
 matplotlib.rcParams['figure.figsize'] = [9, 7]
 matplotlib.rcParams['font.family'] = ['STKaiTi']
-matplotlib.rcParams['axes.unicode_minus']=False 
-import  tensorflow as tf
-from    tensorflow import keras
-from    tensorflow.keras import datasets, layers, optimizers
-import  os
+matplotlib.rcParams['axes.unicode_minus'] = False
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import datasets, layers, optimizers
+import os
 
-
-
-
-
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 print(tf.__version__)
 
 
-def preprocess(x, y): 
+def preprocess(x, y):
     # [b, 28, 28], [b]
-    print(x.shape,y.shape)
+    print(x.shape, y.shape)
     x = tf.cast(x, dtype=tf.float32) / 255.
-    x = tf.reshape(x, [-1, 28*28])
+    x = tf.reshape(x, [-1, 28 * 28])
     y = tf.cast(y, dtype=tf.int32)
     y = tf.one_hot(y, depth=10)
 
-    return x,y
+    return x, y
 
-#%%
+
+# %%
 (x, y), (x_test, y_test) = datasets.mnist.load_data()
 print('x:', x.shape, 'y:', y.shape, 'x test:', x_test.shape, 'y test:', y_test)
-#%%
+# %%
 batchsz = 512
 train_db = tf.data.Dataset.from_tensor_slices((x, y))
 train_db = train_db.shuffle(1000)
@@ -41,24 +39,22 @@ train_db = train_db.batch(batchsz)
 train_db = train_db.map(preprocess)
 train_db = train_db.repeat(20)
 
-#%%
+# %%
 
 test_db = tf.data.Dataset.from_tensor_slices((x_test, y_test))
 test_db = test_db.shuffle(1000).batch(batchsz).map(preprocess)
-x,y = next(iter(train_db))
+x, y = next(iter(train_db))
 print('train sample:', x.shape, y.shape)
+
+
 # print(x[0], y[0])
 
 
-
-
-#%%
+# %%
 def main():
-
     # learning rate
     lr = 1e-2
-    accs,losses = [], [] # accuracy  准确率
-
+    accs, losses = [], []  # accuracy  准确率
 
     # 784 => 512
     w1, b1 = tf.Variable(tf.random.normal([784, 256], stddev=0.1)), tf.Variable(tf.zeros([256]))
@@ -67,12 +63,8 @@ def main():
     # 256 => 10
     w3, b3 = tf.Variable(tf.random.normal([128, 10], stddev=0.1)), tf.Variable(tf.zeros([10]))
 
+    for step, (x, y) in enumerate(train_db):
 
-
- 
-
-    for step, (x,y) in enumerate(train_db):
- 
         # [b, 28, 28] => [b, 784]
         x = tf.reshape(x, (-1, 784))
 
@@ -90,22 +82,20 @@ def main():
 
             # compute loss
             # [b, 10] - [b, 10]
-            loss = tf.square(y-out)
+            loss = tf.square(y - out)
             # [b, 10] => scalar  均方误差(MSE, mean squared error)
             loss = tf.reduce_mean(loss)
 
- 
-        grads = tape.gradient(loss, [w1, b1, w2, b2, w3, b3]) 
+        grads = tape.gradient(loss, [w1, b1, w2, b2, w3, b3])
         for p, g in zip([w1, b1, w2, b2, w3, b3], grads):
             p.assign_sub(lr * g)
-
 
         # print
         if step % 80 == 0:
             print(step, 'loss:', float(loss))
             losses.append(float(loss))
- 
-        if step %80 == 0:
+
+        if step % 80 == 0:
             # evaluate/test
             total, total_correct = 0., 0
 
@@ -128,13 +118,12 @@ def main():
                 total_correct += tf.reduce_sum(tf.cast(correct, dtype=tf.int32)).numpy()
                 total += x.shape[0]
 
-            print(step, 'Evaluate Acc:', total_correct/total)
+            print(step, 'Evaluate Acc:', total_correct / total)
 
-            accs.append(total_correct/total)
-
+            accs.append(total_correct / total)
 
     plt.figure()
-    x = [i*80 for i in range(len(losses))]
+    x = [i * 80 for i in range(len(losses))]
     plt.plot(x, losses, color='C0', marker='s', label='训练')
     plt.ylabel('MSE')
     plt.xlabel('Step')
@@ -147,6 +136,7 @@ def main():
     plt.xlabel('Step')
     plt.legend()
     plt.savefig('test.svg')
+
 
 if __name__ == '__main__':
     main()

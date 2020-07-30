@@ -1,40 +1,39 @@
-#%%
+# %%
 
-import  tensorflow as tf
-from    tensorflow import keras
-from    tensorflow.keras import layers
-from    tensorflow.keras import datasets
-import  os
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras import datasets
+import os
 
-
-#%% 
-x = tf.random.normal([2,28*28])
+# %%
+x = tf.random.normal([2, 28 * 28])
 w1 = tf.Variable(tf.random.truncated_normal([784, 256], stddev=0.1))
 b1 = tf.Variable(tf.zeros([256]))
-o1 = tf.matmul(x,w1) + b1
+o1 = tf.matmul(x, w1) + b1
 o1
-#%%
-x = tf.random.normal([4,28*28])
-fc1 = layers.Dense(256, activation=tf.nn.relu) 
-fc2 = layers.Dense(128, activation=tf.nn.relu) 
-fc3 = layers.Dense(64, activation=tf.nn.relu) 
-fc4 = layers.Dense(10, activation=None) 
+# %%
+x = tf.random.normal([4, 28 * 28])
+fc1 = layers.Dense(256, activation=tf.nn.relu)
+fc2 = layers.Dense(128, activation=tf.nn.relu)
+fc3 = layers.Dense(64, activation=tf.nn.relu)
+fc4 = layers.Dense(10, activation=None)
 h1 = fc1(x)
 h2 = fc2(h1)
 h3 = fc3(h2)
 h4 = fc4(h3)
 
 model = layers.Sequential([
-    layers.Dense(256, activation=tf.nn.relu) ,
-    layers.Dense(128, activation=tf.nn.relu) ,
-    layers.Dense(64, activation=tf.nn.relu) ,
-    layers.Dense(10, activation=None) ,
+    layers.Dense(256, activation=tf.nn.relu),
+    layers.Dense(128, activation=tf.nn.relu),
+    layers.Dense(64, activation=tf.nn.relu),
+    layers.Dense(10, activation=None),
 ])
 out = model(x)
 
-#%%
-256*784+256+128*256+128+64*128+64+10*64+10
-#%%
+# %%
+256 * 784 + 256 + 128 * 256 + 128 + 64 * 128 + 64 + 10 * 64 + 10
+# %%
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # x: [60k, 28, 28],
@@ -48,12 +47,10 @@ print(x.shape, y.shape, x.dtype, y.dtype)
 print(tf.reduce_min(x), tf.reduce_max(x))
 print(tf.reduce_min(y), tf.reduce_max(y))
 
-
-train_db = tf.data.Dataset.from_tensor_slices((x,y)).batch(128)
+train_db = tf.data.Dataset.from_tensor_slices((x, y)).batch(128)
 train_iter = iter(train_db)
 sample = next(train_iter)
 print('batch:', sample[0].shape, sample[1].shape)
-
 
 # [b, 784] => [b, 256] => [b, 128] => [b, 10]
 # [dim_in, dim_out], [dim_out]
@@ -72,27 +69,27 @@ b4 = tf.Variable(tf.zeros([10]))
 
 lr = 1e-3
 
-for epoch in range(10): # iterate db for 10
-    for step, (x, y) in enumerate(train_db): # for every batch
+for epoch in range(10):  # iterate db for 10
+    for step, (x, y) in enumerate(train_db):  # for every batch
         # x:[128, 28, 28]
         # y: [128]
 
         # [b, 28, 28] => [b, 28*28]
-        x = tf.reshape(x, [-1, 28*28])
+        x = tf.reshape(x, [-1, 28 * 28])
 
-        with tf.GradientTape() as tape: # tf.Variable
+        with tf.GradientTape() as tape:  # tf.Variable
             # x: [b, 28*28]
             #  隐藏层1前向计算，[b, 28*28] => [b, 256]
-            h1 = x@w1 + tf.broadcast_to(b1, [x.shape[0], 256])
+            h1 = x @ w1 + tf.broadcast_to(b1, [x.shape[0], 256])
             h1 = tf.nn.relu(h1)
             # 隐藏层2前向计算，[b, 256] => [b, 128]
-            h2 = h1@w2 + b2
+            h2 = h1 @ w2 + b2
             h2 = tf.nn.relu(h2)
             # 隐藏层3前向计算，[b, 128] => [b, 64] 
-            h3 = h2@w3 + b3
+            h3 = h2 @ w3 + b3
             h3 = tf.nn.relu(h3)
             # 输出层前向计算，[b, 64] => [b, 10] 
-            h4 = h3@w4 + b4
+            h4 = h3 @ w4 + b4
             out = h4
 
             # compute loss
@@ -119,11 +116,7 @@ for epoch in range(10): # iterate db for 10
         w4.assign_sub(lr * grads[6])
         b4.assign_sub(lr * grads[7])
 
-
         if step % 100 == 0:
             print(epoch, step, 'loss:', float(loss))
 
-
-
-
-#%%
+# %%

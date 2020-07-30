@@ -1,18 +1,19 @@
-import  os
+import os
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-import  matplotlib
-from 	matplotlib import pyplot as plt
+import matplotlib
+from matplotlib import pyplot as plt
+
 # Default parameters for plots
 matplotlib.rcParams['font.size'] = 20
 matplotlib.rcParams['figure.titlesize'] = 20
 matplotlib.rcParams['figure.figsize'] = [9, 7]
 matplotlib.rcParams['font.family'] = ['STKaiTi']
-matplotlib.rcParams['axes.unicode_minus']=False 
+matplotlib.rcParams['axes.unicode_minus'] = False
 
-import  tensorflow as tf
-from    tensorflow import keras
-from    tensorflow.keras import datasets
-
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import datasets
 
 # x: [60k, 28, 28],
 # y: [60k]
@@ -25,12 +26,10 @@ print(x.shape, y.shape, x.dtype, y.dtype)
 print(tf.reduce_min(x), tf.reduce_max(x))
 print(tf.reduce_min(y), tf.reduce_max(y))
 
-
-train_db = tf.data.Dataset.from_tensor_slices((x,y)).batch(128)
+train_db = tf.data.Dataset.from_tensor_slices((x, y)).batch(128)
 train_iter = iter(train_db)
 sample = next(train_iter)
 print('batch:', sample[0].shape, sample[1].shape)
-
 
 # [b, 784] => [b, 256] => [b, 128] => [b, 10]
 # [dim_in, dim_out], [dim_out]
@@ -45,25 +44,25 @@ lr = 1e-3
 
 losses = []
 
-for epoch in range(20): # iterate db for 10
-    for step, (x, y) in enumerate(train_db): # for every batch
+for epoch in range(20):  # iterate db for 10
+    for step, (x, y) in enumerate(train_db):  # for every batch
         # x:[128, 28, 28]
         # y: [128]
 
         # [b, 28, 28] => [b, 28*28]
-        x = tf.reshape(x, [-1, 28*28])
+        x = tf.reshape(x, [-1, 28 * 28])
 
-        with tf.GradientTape() as tape: # tf.Variable
+        with tf.GradientTape() as tape:  # tf.Variable
             # x: [b, 28*28]
             # h1 = x@w1 + b1
             # [b, 784]@[784, 256] + [256] => [b, 256] + [256] => [b, 256] + [b, 256]
-            h1 = x@w1 + tf.broadcast_to(b1, [x.shape[0], 256])
+            h1 = x @ w1 + tf.broadcast_to(b1, [x.shape[0], 256])
             h1 = tf.nn.relu(h1)
             # [b, 256] => [b, 128]
-            h2 = h1@w2 + b2
+            h2 = h1 @ w2 + b2
             h2 = tf.nn.relu(h2)
             # [b, 128] => [b, 10]
-            out = h2@w3 + b3
+            out = h2 @ w3 + b3
 
             # compute loss
             # out: [b, 10]
@@ -86,7 +85,6 @@ for epoch in range(20): # iterate db for 10
         b2.assign_sub(lr * grads[3])
         w3.assign_sub(lr * grads[4])
         b3.assign_sub(lr * grads[5])
-
 
         if step % 100 == 0:
             print(epoch, step, 'loss:', float(loss))

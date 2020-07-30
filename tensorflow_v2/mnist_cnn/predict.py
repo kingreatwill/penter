@@ -33,6 +33,7 @@ class Predict(object):
         # 因为x只传入了一张图片，取y[0]即可
         # np.argmax()取得最大值的下标，即代表的数字
         print(image_path)
+        print(y)
         print(y[0])
         print('        -> Predict digit', np.argmax(y[0]))
 

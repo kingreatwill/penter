@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib import pyplot as plt
 
 
 # data = []
@@ -49,22 +50,38 @@ def gradient_descent_runner(points, starting_b, starting_w, learning_rate, num_i
     return [b, w]
 
 
+# 绘制离散点
+def draw_points(points):
+    for i in range(0, len(points)):
+        x = points[i, 0]
+        y = points[i, 1]
+        plt.scatter(x, y)
+
+
 def run():
     points = np.genfromtxt("data.csv", delimiter=",")
-    learning_rate = 0.0001
+    draw_points(points)
+
+    learning_rate = 0.0001  # 学习速率，步长
     initial_b = 0  # initial y-intercept guess
     initial_w = 0  # initial slope guess
-    num_iterations = 1000
+    num_iterations = 1000  # 训练次数
     print("Starting gradient descent at b = {0}, w = {1}, error = {2}"
           .format(initial_b, initial_w,
                   compute_error_for_line_given_points(initial_b, initial_w, points))
           )
     print("Running...")
+    # 梯度下降
     [b, w] = gradient_descent_runner(points, initial_b, initial_w, learning_rate, num_iterations)
     print("After {0} iterations b = {1}, w = {2}, error = {3}".
           format(num_iterations, b, w,
                  compute_error_for_line_given_points(b, w, points))
           )
+    # y = wx + b
+    x = np.arange(0, 100, 1)
+    y = w * x + b
+    plt.plot(x, y)  # 画图，以t为横坐标，s为纵坐标
+    plt.show()
 
 
 if __name__ == '__main__':
