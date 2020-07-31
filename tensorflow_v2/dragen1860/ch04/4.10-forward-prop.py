@@ -10,6 +10,13 @@ plt.rcParams['axes.unicode_minus'] = False
 def load_data():
     # 加载 MNIST 数据集
     (x, y), (x_val, y_val) = datasets.mnist.load_data()
+
+    # 数据集打乱
+    # idx = tf.range(len(x))
+    # tf.random.shuffle(idx)
+    # x = tf.gather(x,idx)
+    # y = tf.gather(y, idx)
+
     # 转换为浮点张量， 并缩放到-1~1
     x = tf.convert_to_tensor(x, dtype=tf.float32) / 255.
     # 转换为整形张量
@@ -31,6 +38,8 @@ def init_paramaters():
     # 每层的张量都需要被优化，故使用 Variable 类型，并使用截断的正太分布初始化权值张量
     # 偏置向量初始化为 0 即可
     # 第一层的参数
+    # tf.random.normal
+    # tf.random.uniform
     w1 = tf.Variable(tf.random.truncated_normal([784, 256], stddev=0.1))
     b1 = tf.Variable(tf.zeros([256]))
     # 第二层的参数
@@ -94,7 +103,36 @@ def train(epochs):
     plt.legend()
     plt.savefig('MNIST数据集的前向传播训练误差曲线.png')
     plt.close()
+    return w1, b1, w2, b2, w3, b3
 
+def predict(image_path, w1, b1, w2, b2, w3, b3):
+    from PIL import Image
+    import numpy as np
+    img = Image.open(image_path).convert('L')
+    # img = img.resize((168, 168))
+    # img = np.asarray(img)
+    # print(img.shape)
+    flatten_img = np.reshape(img, (28, 28, 1))
+    x = np.array([1 - flatten_img])
+    # 打平
+    # x = tf.reshape(x, (-1, 28 * 28))
+    x = np.reshape(x, (-1, 28 * 28))
+
+    # 第一层计算， [b, 784]@[784, 256] + [256] => [b, 256] + [256] => [b,256] + [b, 256]
+    h1 = x @ w1 + tf.broadcast_to(b1, (x.shape[0], 256))
+    h1 = tf.nn.relu(h1)  # 通过激活函数
+
+    # 第二层计算， [b, 256] => [b, 128]
+    h2 = h1 @ w2 + b2
+    h2 = tf.nn.relu(h2)
+    # 输出层计算， [b, 128] => [b, 10]
+    out = h2 @ w3 + b3
+
+    print(out)
+    print(np.argmax(out[0]))
 
 if __name__ == '__main__':
-    train(epochs=20)
+    w1, b1, w2, b2, w3, b3 = train(epochs=1000)
+    predict(r"E:\openjw\penter\tensorflow_v2\mnist_cnn\test_images\0.png", w1, b1, w2, b2, w3, b3)
+    predict(r"E:\openjw\penter\tensorflow_v2\mnist_cnn\test_images\1.png", w1, b1, w2, b2, w3, b3)
+    predict(r"E:\openjw\penter\tensorflow_v2\mnist_cnn\test_images\4.png", w1, b1, w2, b2, w3, b3)

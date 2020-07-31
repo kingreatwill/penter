@@ -2,6 +2,7 @@
 
 视频：https://www.bilibili.com/video/BV1bK4y187k7
 源码：https://github.com/dragen1860/Deep-Learning-with-TensorFlow-book
+https://github.com/dragen1860/TensorFlow-2.x-Tutorials
 
 ch01 - 人工智能绪论
 ch02 - 回归问题
@@ -18,4 +19,6 @@ ch12 - 自编码器
 ch13 - 生成对抗网络
 ch14 - 强化学习
 ch15 - 自定义数据集
+
+算法&机器学习：https://github.com/sladesha/Reflection_Summary
 

@@ -11,6 +11,13 @@ from tensorflow.keras import layers, optimizers, datasets
 # x (60000, 28, 28)   y是label：(60000,)
 print("Datasets Shape :", x.shape, y.shape)
 
+# 数据集打乱
+# idx = tf.range(len(x))
+# tf.random.shuffle(idx)
+# x = tf.gather(x,idx)
+# y = tf.gather(y, idx)
+
+
 x = tf.convert_to_tensor(x, dtype=tf.float32) / 255.
 y = tf.convert_to_tensor(y, dtype=tf.int32)
 y = tf.one_hot(y, depth=10)
@@ -22,6 +29,7 @@ train_dataset = tf.data.Dataset.from_tensor_slices((x, y))
 train_dataset = train_dataset.batch(200)
 
 # tensorflow_v2\mnist_cnn\train.py
+# tensorflow_v2\dragen1860\ch04\4.10-forward-prop.py
 # dense ：全连接层  相当于添加一个层
 model = keras.Sequential([
     layers.Dense(512, activation='relu', activity_regularizer="l2"),  # 512 输出维度
