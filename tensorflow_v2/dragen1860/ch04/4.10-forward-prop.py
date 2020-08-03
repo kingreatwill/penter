@@ -74,7 +74,7 @@ def train_epoch(epoch, train_dataset, w1, b1, w2, b2, w3, b3, lr=0.001):
             grads = tape.gradient(loss, [w1, b1, w2, b2, w3, b3])
 
         # 梯度更新， assign_sub 将当前值减去参数值，原地更新
-        w1.assign_sub(lr * grads[0])
+        w1.assign_sub(lr * grads[0]) # w1 = w1 - lr * grads[0]
         b1.assign_sub(lr * grads[1])
         w2.assign_sub(lr * grads[2])
         b2.assign_sub(lr * grads[3])
