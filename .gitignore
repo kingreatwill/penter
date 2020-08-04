@@ -108,3 +108,5 @@ venv.bak/
 /tensorflow_v2/mnist_cnn/ckpt/
 /bigdata_study/pyspark3/demo/delta-table/
 /pytorch1.x/logs/
+/tensorflow_v2/dragen1860/ch08/logs/
+/tensorflow_v2/dragen1860/ch08/ckpt/
