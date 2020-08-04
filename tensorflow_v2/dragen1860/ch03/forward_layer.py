@@ -59,7 +59,7 @@ def train_epoch(epoch):
     # Step4.loop （每次取200，上面有设置，会循环300次）
     for step, (x, y) in enumerate(train_dataset):
 
-        with tf.GradientTape() as tape:
+        with tf.GradientTape() as tape: # 梯度下降很消耗GPU资源，所以要释放
             # [b, 28, 28] => [b, 784] 打平(如果在model添加layers.Flatten(),下面的打平操作可以不要)
             x = tf.reshape(x, (-1, 28 * 28))
             # Step1. compute output
