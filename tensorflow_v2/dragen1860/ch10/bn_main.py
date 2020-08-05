@@ -3,11 +3,13 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, optimizers
 
+# BatchNorm 归一化网络激活函数
 # 2 images with 4x4 size, 3 channels
 # we explicitly enforce the mean and stddev to N(1, 0.5)
 x = tf.random.normal([2, 4, 4, 3], mean=1.0, stddev=0.5)
 
 net = layers.BatchNormalization(axis=-1, center=True, scale=True, trainable=True)
+# layers.LayerNormalization
 
 out = net(x)
 print("forward in test mode:", net.variables)

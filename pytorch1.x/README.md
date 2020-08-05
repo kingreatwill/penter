@@ -7,3 +7,23 @@ ImageCaptioning描述 ： https://github.com/ruotianluo/ImageCaptioning.pytorch
 问答：https://github.com/allenai/document-qa
 翻译：https://github.com/OpenNMT/OpenNMT-py
 Deep Reinforcement Learning：https://github.com/jingweiz/pytorch-rl
+
+
+Torchvision.models包里面包含了常见的各种基础模型架构，主要包括：
+
+AlexNet
+VGG
+ResNet
+SqueezeNet
+DenseNet
+Inception v3
+GoogLeNet
+ShuffleNet v2
+MobileNet v2
+ResNeXt
+Wide ResNet
+MNASNet
+
+ResNet50实现图像分类
+Faster-RCNN实现对象检测
+Torchvision自带的对象检测模型是基于COCO数据集训练的，最小分辨率支持800， 最大支持1333的输入图像。

@@ -1,15 +1,17 @@
-import tensorflow as tf
-from tensorflow.keras import layers, optimizers, datasets, Sequential
 import os
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
+import tensorflow as tf
+from tensorflow.keras import layers, optimizers, datasets, Sequential
+
 tf.random.set_seed(2345)
 
 conv_layers = [  # 5 units of conv + max pooling
     # unit 1
     layers.Conv2D(64, kernel_size=[3, 3], padding="same", activation=tf.nn.relu),
     layers.Conv2D(64, kernel_size=[3, 3], padding="same", activation=tf.nn.relu),
-    layers.MaxPool2D(pool_size=[2, 2], strides=2, padding="same"),  # 池化层->降维
+    layers.MaxPool2D(pool_size=[2, 2], strides=2, padding="same"),
     # unit 2
     layers.Conv2D(128, kernel_size=[3, 3], padding="same", activation=tf.nn.relu),
     layers.Conv2D(128, kernel_size=[3, 3], padding="same", activation=tf.nn.relu),
@@ -31,12 +33,12 @@ conv_layers = [  # 5 units of conv + max pooling
 
 def preprocess(x, y):
     # [0~1]
-    x = 2 * tf.cast(x, dtype=tf.float32) / 255.0 - 1
+    x = tf.cast(x, dtype=tf.float32) / 255.0
     y = tf.cast(y, dtype=tf.int32)
     return x, y
 
 
-(x, y), (x_test, y_test) = datasets.cifar10.load_data()
+(x, y), (x_test, y_test) = datasets.cifar100.load_data()
 y = tf.squeeze(y, axis=1)
 y_test = tf.squeeze(y_test, axis=1)
 print(x.shape, y.shape, x_test.shape, y_test.shape)
@@ -65,7 +67,7 @@ def main():
         [
             layers.Dense(256, activation=tf.nn.relu),
             layers.Dense(128, activation=tf.nn.relu),
-            layers.Dense(10, activation=None),
+            layers.Dense(100, activation=None),
         ]
     )
 
@@ -87,10 +89,10 @@ def main():
                 out = conv_net(x)
                 # flatten, => [b, 512]
                 out = tf.reshape(out, [-1, 512])
-                # [b, 512] => [b, 10]
+                # [b, 512] => [b, 100]
                 logits = fc_net(out)
-                # [b] => [b, 10]
-                y_onehot = tf.one_hot(y, depth=10)
+                # [b] => [b, 100]
+                y_onehot = tf.one_hot(y, depth=100)
                 # compute loss
                 loss = tf.losses.categorical_crossentropy(
                     y_onehot, logits, from_logits=True
