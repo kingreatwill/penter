@@ -2,6 +2,14 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, Sequential
 
+"""
+一个层接受一个张量并给出一个张量，这是一些张量运算的结果
+模型是多层的组合。 
+如果使用现有的keras / tf层构建新的模型体系结构，则构建自定义模型。 
+
+如果要在图层中实现自己的自定义张量操作，则构建自定义图层。如果在自定义图层中使用非张量操作，则必须编码图层如何向前传播和向后传播。
+"""
+
 
 class BasicBlock(layers.Layer):
     # 残差模块 stride卷积核移动的步长

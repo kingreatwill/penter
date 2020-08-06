@@ -110,3 +110,5 @@ venv.bak/
 /pytorch1.x/logs/
 /tensorflow_v2/dragen1860/ch08/logs/
 /tensorflow_v2/dragen1860/ch08/ckpt/
+/tensorflow_v2/dragen1860/ch12/vae_images/
+/tensorflow_v2/dragen1860/ch12/ae_images/

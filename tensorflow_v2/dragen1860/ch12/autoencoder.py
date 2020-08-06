@@ -1,27 +1,25 @@
-import  os
-import  tensorflow as tf
-import  numpy as np
-from    tensorflow import keras
-from    tensorflow.keras import Sequential, layers
-from    PIL import Image
-from    matplotlib import pyplot as plt
-
-
+import os
+import tensorflow as tf
+import numpy as np
+from tensorflow import keras
+from tensorflow.keras import Sequential, layers
+from PIL import Image
+from matplotlib import pyplot as plt
 
 tf.random.set_seed(22)
 np.random.seed(22)
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-assert tf.__version__.startswith('2.')
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+assert tf.__version__.startswith("2.")
 
 
 def save_images(imgs, name):
-    new_im = Image.new('L', (280, 280))
+    new_im = Image.new("L", (280, 280))
 
     index = 0
     for i in range(0, 280, 28):
         for j in range(0, 280, 28):
             im = imgs[index]
-            im = Image.fromarray(im, mode='L')
+            im = Image.fromarray(im, mode="L")
             new_im.paste(im, (i, j))
             index += 1
 
@@ -32,9 +30,8 @@ h_dim = 20
 batchsz = 512
 lr = 1e-3
 
-
 (x_train, y_train), (x_test, y_test) = keras.datasets.fashion_mnist.load_data()
-x_train, x_test = x_train.astype(np.float32) / 255., x_test.astype(np.float32) / 255.
+x_train, x_test = x_train.astype(np.float32) / 255.0, x_test.astype(np.float32) / 255.0
 # we do not need label
 train_db = tf.data.Dataset.from_tensor_slices(x_train)
 train_db = train_db.shuffle(batchsz * 5).batch(batchsz)
@@ -45,26 +42,27 @@ print(x_train.shape, y_train.shape)
 print(x_test.shape, y_test.shape)
 
 
-
 class AE(keras.Model):
-
     def __init__(self):
         super(AE, self).__init__()
 
         # Encoders
-        self.encoder = Sequential([
-            layers.Dense(256, activation=tf.nn.relu),
-            layers.Dense(128, activation=tf.nn.relu),
-            layers.Dense(h_dim)
-        ])
+        self.encoder = Sequential(
+            [
+                layers.Dense(256, activation=tf.nn.relu),
+                layers.Dense(128, activation=tf.nn.relu),
+                layers.Dense(h_dim),
+            ]
+        )
 
         # Decoders
-        self.decoder = Sequential([
-            layers.Dense(128, activation=tf.nn.relu),
-            layers.Dense(256, activation=tf.nn.relu),
-            layers.Dense(784)
-        ])
-
+        self.decoder = Sequential(
+            [
+                layers.Dense(128, activation=tf.nn.relu),
+                layers.Dense(256, activation=tf.nn.relu),
+                layers.Dense(784),
+            ]
+        )
 
     def call(self, inputs, training=None):
         # [b, 784] => [b, 10]
@@ -73,7 +71,6 @@ class AE(keras.Model):
         x_hat = self.decoder(h)
 
         return x_hat
-
 
 
 model = AE()
@@ -86,7 +83,7 @@ for epoch in range(100):
 
     for step, x in enumerate(train_db):
 
-        #[b, 28, 28] => [b, 784]
+        # [b, 28, 28] => [b, 784]
         x = tf.reshape(x, [-1, 784])
 
         with tf.GradientTape() as tape:
@@ -98,10 +95,8 @@ for epoch in range(100):
         grads = tape.gradient(rec_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(grads, model.trainable_variables))
 
-
-        if step % 100 ==0:
+        if step % 100 == 0:
             print(epoch, step, float(rec_loss))
-
 
         # evaluation
         x = next(iter(test_db))
@@ -112,7 +107,7 @@ for epoch in range(100):
 
         # [b, 28, 28] => [2b, 28, 28]
         x_concat = tf.concat([x, x_hat], axis=0)
-        x_concat = x_hat
-        x_concat = x_concat.numpy() * 255.
+        x_concat = x_hat  # 这行注释，那么显示原始图片
+        x_concat = x_concat.numpy() * 255.0
         x_concat = x_concat.astype(np.uint8)
-        save_images(x_concat, 'ae_images/rec_epoch_%d.png'%epoch)
+        save_images(x_concat, "ae_images/rec_epoch_%d.png" % epoch)
