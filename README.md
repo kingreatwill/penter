@@ -67,6 +67,20 @@ python2
 Python3.X 源码文件默认使用utf-8编码，所以可以正常解析中文，无需指定 UTF-8 编码
 ```
 
+## conda
+conda info --envs
+conda create --name penter python=3.8
+conda activate gluon
+
+conda deactivate 退出
+
+conda list: 看这个环境下安装的包和版本
+conda install numpy scikit-learn: 安装numpy sklearn包
+conda env remove -n yourEnv: 删除你的环境
+conda env list: 查看所有的环境
+[Anaconda 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)
+
+
 ## Python3 * 和 ** 运算符
 ### 1. 算数运算
 ```
