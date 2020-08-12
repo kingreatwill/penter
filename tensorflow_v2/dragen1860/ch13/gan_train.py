@@ -1,13 +1,17 @@
-import  os
-import  numpy as np
-import  tensorflow as tf
-from    tensorflow import keras
-from    scipy.misc import toimage
-import  glob
-from    gan import Generator, Discriminator
+import os
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+import glob
+from gan import Generator, Discriminator
 
-from    dataset import make_anime_dataset
+from dataset import make_anime_dataset
 
+from PIL import Image
+
+def toimage(image_array,image_path):
+    img = Image.fromarray(np.uint8(image_array)).covert('RGB')
+    img.save(image_path)
 
 def save_result(val_out, val_block_size, image_path, color_mode):
     def preprocess(img):
@@ -26,7 +30,7 @@ def save_result(val_out, val_block_size, image_path, color_mode):
             single_row = np.concatenate((single_row, preprocesed[b, :, :, :]), axis=1)
 
         # concat image row to final_image
-        if (b+1) % val_block_size == 0:
+        if (b + 1) % val_block_size == 0:
             if final_image.size == 0:
                 final_image = single_row
             else:
@@ -37,7 +41,7 @@ def save_result(val_out, val_block_size, image_path, color_mode):
 
     if final_image.shape[2] == 1:
         final_image = np.squeeze(final_image, axis=2)
-    toimage(final_image).save(image_path)
+    toimage(final_image,image_path)
 
 
 def celoss_ones(logits):
@@ -52,6 +56,7 @@ def celoss_zeros(logits):
     y = tf.zeros_like(logits)
     loss = keras.losses.binary_crossentropy(y, logits, from_logits=True)
     return tf.reduce_mean(loss)
+
 
 def d_loss_fn(generator, discriminator, batch_z, batch_x, is_training):
     # 计算判别器的误差函数
@@ -81,17 +86,16 @@ def g_loss_fn(generator, discriminator, batch_z, is_training):
 
     return loss
 
-def main():
 
+def main():
     tf.random.set_seed(3333)
     np.random.seed(3333)
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
     assert tf.__version__.startswith('2.')
 
-
-    z_dim = 100 # 隐藏向量z的长度
-    epochs = 3000000 # 训练步数
-    batch_size = 64 # batch size
+    z_dim = 100  # 隐藏向量z的长度
+    epochs = 3000000  # 训练步数
+    batch_size = 64  # batch size
     learning_rate = 0.0002
     is_training = True
 
@@ -99,23 +103,22 @@ def main():
     # C:\Users\z390\Downloads\anime-faces
     # r'C:\Users\z390\Downloads\faces\*.jpg'
     img_path = glob.glob(r'C:\Users\z390\Downloads\anime-faces\*\*.jpg') + \
-        glob.glob(r'C:\Users\z390\Downloads\anime-faces\*\*.png')
+               glob.glob(r'C:\Users\z390\Downloads\anime-faces\*\*.png')
     # img_path = glob.glob(r'C:\Users\z390\Downloads\getchu_aligned_with_label\GetChu_aligned2\*.jpg')
     # img_path.extend(img_path2)
     print('images num:', len(img_path))
     # 构建数据集对象
     dataset, img_shape, _ = make_anime_dataset(img_path, batch_size, resize=64)
     print(dataset, img_shape)
-    sample = next(iter(dataset)) # 采样
+    sample = next(iter(dataset))  # 采样
     print(sample.shape, tf.reduce_max(sample).numpy(),
           tf.reduce_min(sample).numpy())
-    dataset = dataset.repeat(100) # 重复循环
+    dataset = dataset.repeat(100)  # 重复循环
     db_iter = iter(dataset)
 
-
-    generator = Generator() # 创建生成器
-    generator.build(input_shape = (4, z_dim))
-    discriminator = Discriminator() # 创建判别器
+    generator = Generator()  # 创建生成器
+    generator.build(input_shape=(4, z_dim))
+    discriminator = Discriminator()  # 创建判别器
     discriminator.build(input_shape=(4, 64, 64, 3))
     # 分别为生成器和判别器创建优化器
     g_optimizer = keras.optimizers.Adam(learning_rate=learning_rate, beta_1=0.5)
@@ -125,13 +128,13 @@ def main():
     discriminator.load_weights('discriminator.ckpt')
     print('Loaded chpt!!')
 
-    d_losses, g_losses = [],[]
-    for epoch in range(epochs): # 训练epochs次
+    d_losses, g_losses = [], []
+    for epoch in range(epochs):  # 训练epochs次
         # 1. 训练判别器
         for _ in range(1):
             # 采样隐藏向量
             batch_z = tf.random.normal([batch_size, z_dim])
-            batch_x = next(db_iter) # 采样真实图片
+            batch_x = next(db_iter)  # 采样真实图片
             # 判别器前向计算
             with tf.GradientTape() as tape:
                 d_loss = d_loss_fn(generator, discriminator, batch_z, batch_x, is_training)
@@ -140,7 +143,7 @@ def main():
         # 2. 训练生成器
         # 采样隐藏向量
         batch_z = tf.random.normal([batch_size, z_dim])
-        batch_x = next(db_iter) # 采样真实图片
+        batch_x = next(db_iter)  # 采样真实图片
         # 生成器前向计算
         with tf.GradientTape() as tape:
             g_loss = g_loss_fn(generator, discriminator, batch_z, is_training)
@@ -148,11 +151,11 @@ def main():
         g_optimizer.apply_gradients(zip(grads, generator.trainable_variables))
 
         if epoch % 100 == 0:
-            print(epoch, 'd-loss:',float(d_loss), 'g-loss:', float(g_loss))
+            print(epoch, 'd-loss:', float(d_loss), 'g-loss:', float(g_loss))
             # 可视化
             z = tf.random.normal([100, z_dim])
             fake_image = generator(z, training=False)
-            img_path = os.path.join('gan_images', 'gan-%d.png'%epoch)
+            img_path = os.path.join('gan_images', 'gan-%d.png' % epoch)
             save_result(fake_image.numpy(), 10, img_path, color_mode='P')
 
             d_losses.append(float(d_loss))
@@ -163,9 +166,6 @@ def main():
                 # print(g_losses)
                 generator.save_weights('generator.ckpt')
                 discriminator.save_weights('discriminator.ckpt')
-
-            
-
 
 
 if __name__ == '__main__':

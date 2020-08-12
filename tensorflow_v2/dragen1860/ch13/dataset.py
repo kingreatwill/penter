@@ -4,7 +4,6 @@ import tensorflow as tf
 
 
 def make_anime_dataset(img_paths, batch_size, resize=64, drop_remainder=True, shuffle=True, repeat=1):
-
     # @tf.function
     def _map_fn(img):
         img = tf.image.resize(img, [resize, resize])
@@ -12,15 +11,15 @@ def make_anime_dataset(img_paths, batch_size, resize=64, drop_remainder=True, sh
         # img = tf.image.random_flip_left_right(img)
         # img = tf.image.random_flip_up_down(img)
         img = tf.clip_by_value(img, 0, 255)
-        img = img / 127.5 - 1 #-1~1
+        img = img / 127.5 - 1  # -1~1
         return img
 
     dataset = disk_image_batch_dataset(img_paths,
-                                          batch_size,
-                                          drop_remainder=drop_remainder,
-                                          map_fn=_map_fn,
-                                          shuffle=shuffle,
-                                          repeat=repeat)
+                                       batch_size,
+                                       drop_remainder=drop_remainder,
+                                       map_fn=_map_fn,
+                                       shuffle=shuffle,
+                                       repeat=repeat)
     img_shape = (resize, resize, 3)
     len_dataset = len(img_paths) // batch_size
 

@@ -2,7 +2,18 @@
 # pip3 install face_recognition
 # pip3 install face_recognition -i  http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 # https://github.com/ageitgey/face_recognition
+"""
+https://github.com/mrzv/dionysus/issues/15
 
+下载的最新cmake编译出错，可以使用vs的cmake（安装vs 要选择c++编译），
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin
+
+如果还有错安装https://cmake.org/download/
+
+https://pypi.org/project/cmake/
+https://anaconda.org/conda-forge/cmake
+https://anaconda.org/anaconda/cmake
+"""
 import face_recognition
 import cv2
 
@@ -145,4 +156,4 @@ def demo6():
     cv2.destroyAllWindows()
 
 if __name__ =="__main__":
-    demo6()
+    demo2()

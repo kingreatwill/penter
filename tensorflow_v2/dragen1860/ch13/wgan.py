@@ -1,10 +1,6 @@
-import  tensorflow as tf
-from    tensorflow import keras
-from    tensorflow.keras import layers
-
-
-
-
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
 
 
 class Generator(keras.Model):
@@ -13,7 +9,7 @@ class Generator(keras.Model):
         super(Generator, self).__init__()
 
         # z: [b, 100] => [b, 3*3*512] => [b, 3, 3, 512] => [b, 64, 64, 3]
-        self.fc = layers.Dense(3*3*512)
+        self.fc = layers.Dense(3 * 3 * 512)
 
         self.conv1 = layers.Conv2DTranspose(256, 3, 3, 'valid')
         self.bn1 = layers.BatchNormalization()
@@ -56,9 +52,7 @@ class Discriminator(keras.Model):
         self.flatten = layers.Flatten()
         self.fc = layers.Dense(1)
 
-
     def call(self, inputs, training=None):
-
         x = tf.nn.leaky_relu(self.conv1(inputs))
         x = tf.nn.leaky_relu(self.bn2(self.conv2(x), training=training))
         x = tf.nn.leaky_relu(self.bn3(self.conv3(x), training=training))
@@ -70,11 +64,10 @@ class Discriminator(keras.Model):
 
         return logits
 
-def main():
 
+def main():
     d = Discriminator()
     g = Generator()
-
 
     x = tf.random.normal([2, 64, 64, 3])
     z = tf.random.normal([2, 100])
@@ -83,8 +76,6 @@ def main():
     print(prob)
     x_hat = g(z)
     print(x_hat.shape)
-
-
 
 
 if __name__ == '__main__':
