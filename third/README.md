@@ -109,11 +109,23 @@ xml解析器有标准库
 
 
 ## orm
+### sqlalchemy
 sqlalchemy 如果用Flask可以用这个.
 支持了异步https://pypi.org/project/async-sqlalchemy
-django自带的ORM
-tornado可以试试peewee 星最多
+https://github.com/sqlalchemy/sqlalchemy 2.6k
+其实还有的sqlalchemy的镜像 3.4k （就算加起来是6K）
+### django自带的ORM
 
+### peewee
+tornado可以试试peewee 星最多
+https://github.com/coleifer/peewee 7.7k
+
+### records
+星也是比较多(好像不怎么更新了)
+https://github.com/kennethreitz-archive/records 6.4k
+
+### pony
+https://github.com/ponyorm/pony 2.3k
 
 ## web
 https://www.cnblogs.com/wongbingming/p/11002978.html
@@ -130,12 +142,13 @@ WSGI 对于 application 对象有如下三点要求
 
 https://stxnext.com/blog/2019/05/31/flask-vs-django-comparison/
 ### Django
-
+https://github.com/django/django 51.3k
 ### Flask
-https://github.com/pallets/flask
+https://github.com/pallets/flask 51.6k
 ### Tornado
-https://github.com/tornadoweb/tornado
-
+https://github.com/tornadoweb/tornado 19.3k
+### bottle
+https://github.com/bottlepy/bottle 6.9k
 
 ## test
 ### 标准库-test,unittest,doctest
