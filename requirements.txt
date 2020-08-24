@@ -36,6 +36,8 @@ google-auth-oauthlib==0.4.1
 google-pasta==0.2.0
 grpcio==1.31.0
 h5py==2.10.0
+helium==3.0.4
+humanreadable==0.1.0
 hyperlpr==0.0.2
 idna @ file:///tmp/build/80754af9/idna_1593446292537/work
 imageai==2.1.5
@@ -61,6 +63,7 @@ lxml @ file:///C:/ci/lxml_1594822774489/work
 Markdown==3.2.2
 MarkupSafe==1.1.1
 matplotlib @ file:///C:/ci/matplotlib-base_1592837548929/work
+mbstrdecoder==1.0.0
 mistune==0.8.4
 mkl-fft==1.1.0
 mkl-random==1.1.1
@@ -81,6 +84,7 @@ parso @ file:///tmp/build/80754af9/parso_1596826841367/work
 peewee==3.13.3
 pickleshare==0.7.5
 Pillow @ file:///C:/ci/pillow_1594298230227/work
+pingparsing==1.1.0
 prometheus-client==0.8.0
 prompt-toolkit==3.0.5
 protobuf==3.12.4
@@ -121,6 +125,7 @@ sip==4.19.13
 six==1.15.0
 smart-open==2.1.0
 SQLAlchemy @ file:///C:/ci/sqlalchemy_1593445271541/work
+subprocrunner==1.2.1
 surprise==0.1
 sympy @ file:///C:/ci/sympy_1594234545115/work
 tensorboard==2.2.2
@@ -135,6 +140,7 @@ torchvision @ file:///D:/Download/torchvision-0.7.0%2Bcu101-cp38-cp38-win_amd64.
 tornado==6.0.4
 tqdm==4.48.2
 traitlets==4.3.3
+typepy==1.1.1
 urllib3 @ file:///tmp/build/80754af9/urllib3_1597086586889/work
 wcwidth @ file:///tmp/build/80754af9/wcwidth_1593447189090/work
 webencodings==0.5.1
