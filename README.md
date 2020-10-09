@@ -32,6 +32,14 @@ pip install -i https://mirrors.aliyun.com/pypi/simple some-package
 or
 pip install -i  http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com some-package
 
+
+【安装】依赖（包）到指定目录
+ 
+$ pip install -d /path/to/save/package -r requirements.txt
+pip install -t /path/to/save/package -r requirements.txt # -t, --target
+
+pip install -e git+https://xxx.github.com/xx.git@master#egg=xx --src /path/to/save/site-packages
+
 setDefault
 pip install pip -U # pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
@@ -80,6 +88,33 @@ python2
 
 Python3.X 源码文件默认使用utf-8编码，所以可以正常解析中文，无需指定 UTF-8 编码
 ```
+
+## python依赖包整体迁移方法
+1. 新建site-packages目录，进入到site-packages目录下；
+
+2. 在site-packages目录下执行pip freeze >requirements.txt；
+
+3. 查看requirements.txt，可以看到当前机器的python所有依赖包已生成列表
+
+4. 在当前目录下执行`pip download -r requirements.txt -d packages/ -i https://mirrors.aliyun.com/pypi/simple/` 可以看到pip开始下载依赖包列表中的所有依赖包
+
+5. 等待下载完成后，可以看到当前目录下已经有了依赖包文件
+
+6. 将site-packages文件夹打包，移动至我们需要这些依赖包的机器上；
+
+7. 在当前机器的site-packages目录下执行：pip install --no-index --find-links=/xxx/xxx/site-packages -r /xxx/xxx/site-packages/requirements.txt
+
+(其中：/xxx/xxx/site-packages是指定依赖包路径，/xxx/xxx/site-packages/requirements.txt是指定依赖包列表路径)；
+
+8. 执行pip list，查看当前pip安装的所有python依赖库，可以看到我们迁移过来的库已经安装成功了
+
+## virtualenv
+pip install virtualenv
+`virtualenv [虚拟环境路径]`，如 `virtualenv D:\env`
+or
+python -m venv /path/to/new/virtual/environment
+or
+直接用pyvenv  /path/to/new/virtual/environment
 
 ## conda
 conda info --envs

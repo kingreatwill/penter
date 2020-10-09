@@ -5,10 +5,51 @@ https://github.com/pyinstaller/pyinstaller
 
 python setup.py install
 
+# zipapp模块进行打包
+```
+"""
+app文件夹
+..app.py
+..hello文件夹
+  ..__init__.py
+  ..hello.py
+"""
 
+
+# app.py
+from hello.hello import say
+def main():
+    print("wo shi app")
+    print(say())
+    
+# hello.py
+def say():
+    return "say hello !"
+```
+
+```
+python -m zipapp app -m "app:main"
+ 
+ app是app文件夹
+ app:main 是如口，app.py中的main函数
+
+生成了 app.pyz
+直接python app.pyz 就可以执行了。
+
+
+第三方库
+# 这条命令是将安装包安装到app文件夹里，我们写的使用，可以不放到这
+# 只要符合模块导入规则，找到到就可以
+python -m pip install -r requirements.txt --target app
+
+# 然后打包就ok了
+python -m zipapp app -m "app:main"
+```
 
 
 # setuptools
+[参考](https://blog.csdn.net/chenfeidi1/article/details/80873979)
+
 一个是打包成egg文件：python setup.py bdist_egg 。
 执行完成后，会在同目录下多了两个文件夹：demo.egg-info和dist，egg文件就在dist中，这个文件可以上传到pypi.python.com上，供大家下载。
 或者上传到某网盘，通过pip install --no--index find-links=[url]来下载。
@@ -16,8 +57,72 @@ python setup.py install
 
 打包完成之后，当然要安装了，上一篇介绍了virtualenv，创建一个虚拟环境以供测试。
 然后执行python setup.py install 就会在你的虚拟环境的bin下创建一个demo的可执行文件，你在虚拟环境中运行：demo，输出结果。
+```
+python setup.py --help
+#查看setup文件的配置信息可以包含哪些
 
-# setuptools
+python setup.py --help-commands
+# 查看程序打包和分发可以使用的命令有哪些
+```
+- 创建egg包：“python setup.py bdist_egg”
+- 创建wheel包：“python setup.py bdist_wheel” 
+    参数：--universal 通用 wheel 包
+
+官方推荐wheel包格式 https://packaging.python.org/discussions/wheel-vs-egg/
+
+主要分为两类：sdist 和 bdist
+
+## Source distribution
+使用 sdist 可以打包成 source distribution，支持的压缩格式有：
+
+Format	| Description |	Notes
+---|---|---
+zip|	zip file (.zip)|	Windows 默认
+gztar|	gzip’ed tar file (.tar.gz)	|Unix 默认
+bztar|	bzip2’ed tar file (.tar.bz2)	
+xztar|	xz’ed tar file (.tar.xz)	
+ztar|	compressed tar file (.tar.Z)	
+tar|	tar file (.tar)	
+
+`python setup.py sdist --formats=gztar,zip`如果不指定则如上表根据具体平台默认格式打包。
+
+## Built distribution
+和源码包相比，由于预先构建好，所以安装更快：
+
+Format |	Description|	Notes
+---|---|---
+gztar|	gzipped tar file (.tar.gz)	|Unix 默认
+bztar|	bzipped tar file (.tar.bz2)	
+xztar|	xzipped tar file (.tar.xz)	
+ztar|	compressed tar file (.tar.Z)	
+tar	|tar file (.tar)	
+zip|	zip file (.zip)|	Windows 默认
+rpm	|RPM	
+pkgtool	|Solaris pkgtool	
+sdux|	HP-UX swinstall	
+wininst	|self-extracting ZIP file for Windows	
+msi	|Microsoft Installer.	
+
+`python setup.py bdist --formats=rpm`
+
+同时为了简化操作，setuptools 提供了如下命令：
+
+Command	|Formats|	Notes
+---|---|---
+bdist_dumb	|tar, gztar, bztar, xztar, ztar, zip	|Windows 默认 zip, Unix 默认 gztar
+bdist_rpm	|rpm, srpm	
+bdist_wininst|	wininst	
+bdist_msi|	msi	
+...|
+
+> 如果使用 bdist_wininst，打出来的是 exe 安装文件，可以点击安装。
+>
+> 使用 develop 开发模式安装的话，实际代码不会拷贝到 site-packages 下，而是除一个指向当前应用的链接（*.egg-link）。这样当前位置的源码改动就会马上反映到 site-packages。使用如下：
+>
+> $ pip install -e .  # 或者 python setup.py develop
+
+
+## setuptools
 
 Setuptools 是 Python Distutils 的加强版，使开发者构建和发布 Python 包更加容易，特别是当包依赖于其他包时。用 setuptools 构建和发布的包与用 Distutils 发布的包是类似的。包的使用者无需安装 setuptools 就可以使用该包。如果用户是从源码包开始构建，并且没有安装过 setuptools 的话，则只要在你的 setup 脚本中包含一个 bootstrap 模块（ez_setup），用户构建时就会自动下载并安装 setuptools 了。
 
@@ -25,7 +130,7 @@ Setuptools 是 Python Distutils 的加强版，使开发者构建和发布 Pytho
 $ pip install --upgrade setuptools
 ```
 
-# 基础用例
+### 基础用例
 
 ```py
 from setuptools import setup, find_packages
