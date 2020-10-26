@@ -120,7 +120,7 @@ bdist_msi|	msi
 > 使用 develop 开发模式安装的话，实际代码不会拷贝到 site-packages 下，而是除一个指向当前应用的链接（*.egg-link）。这样当前位置的源码改动就会马上反映到 site-packages。使用如下：
 >
 > $ pip install -e .  # 或者 python setup.py develop
-
+> pip install --no-deps .(注意：结尾有个.，代表当前路径) 代替 python setup.py install
 
 ## setuptools
 
