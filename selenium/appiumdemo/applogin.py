@@ -1,14 +1,33 @@
 # Android environment
 import unittest
 from appium import webdriver
+from appium.webdriver.extensions.android.nativekey import AndroidKey
+from matplotlib.backend_bases import KeyEvent
 
 desired_caps = {
-    "version": "",
-    "deviceName": "Android01",
-    "platform": "ANDROID",
+    #"version": "",
+    "deviceName": "d00c5441",
+    #"platform": "ANDROID",
+    "platformName": "Android",
+    "platformVersion": "9",
+    #"automationName": "Flutter",
+    #"app":"F:/github/openjw/penter/selenium/appiumdemo/selendroid-test-app-0.11.0.apk",
     "appActivity": ".MainActivity",
-    "appPackage": "io.flutter.demo.gallery",
+    "appPackage": "com.lingcb.saas",  # "io.flutter.demo.gallery",
+    # 'unicodeKeyboard': True,  # 是使用unicode编码方式发送字符串
+    # 'resetKeyboard': True  # 隐藏键盘
 }
+# desired_caps = {
+#     "version": "",
+#     "deviceName": "emulator-5554",
+#     "platform": "ANDROID",
+#     "platformName": "Android",
+#     # "platformVersion": '9',
+#     "appActivity": ".HomeScreenActivity",
+#     "appPackage": "io.selendroid.testapp",  # "io.flutter.demo.gallery",
+#     # 'unicodeKeyboard': True,  # 是使用unicode编码方式发送字符串
+#     # 'resetKeyboard': True  # 隐藏键盘
+# }
 # https://github.com/appium/python-client
 """
 http://www.testclass.net/appium/appium-base-summary/
@@ -21,7 +40,7 @@ desired_caps['platformName'] = 'Android'
 desired_caps['platformVersion'] = '8.1'
 desired_caps['automationName'] = 'uiautomator2'
 desired_caps['deviceName'] = 'test'
-desired_caps['app'] = 'E:/Tests/Appium/selendroid-test-app-0.11.0.apk'
+desired_caps['app'] = 'F:/github/openjw/penter/selenium/appiumdemo/selendroid-test-app-0.11.0.apk'
 "browserName": "chrome"
 
 
@@ -82,24 +101,23 @@ el.send_keys("123")
 # isAppInstalled() 检查应用是否安装
 # runAppInBackground() 将应用置于后台 这个方法需要入参，需要指定应用置于后台的时长。driver.runAppInBackground(2);
 # resetApp() 应用重置
-# driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 # http://127.0.0.1:4723/wd/hub  http://192.168.110.216:9999/wd/hub
 
-driver = webdriver.Remote(command_executor='http://192.168.110.216:9999/wd/hub',
-                          desired_capabilities=desired_caps)
+# driver = webdriver.Remote(command_executor='http://192.168.110.216:9999/wd/hub',  desired_capabilities=desired_caps)
 # settings = driver.get_settings()
 # driver.update_settings({"some setting": "the value"})
 
 # driver.start_activity('com.foo.app', '.MyActivity')
 # driver.start_activity('com.foo.app', '.MainActivity', app_wait_package='your package name')
 
-if driver.is_app_installed("io.flutter.demo.gallery"):
-    print("installed")
-    # 升级 driver.install_app('E:/Tests/Appium/selendroid-test-app-0.11.0.apk')
-    # driver.launch_app()
-else:
-    print("not installed")
-    driver.install_app('E:/Tests/Appium/flutter_gallery_android.apk')
+# if driver.is_app_installed("io.flutter.demo.gallery"):
+#     print("installed")
+#     # 升级 driver.install_app('E:/Tests/Appium/selendroid-test-app-0.11.0.apk')
+#     # driver.launch_app()
+# else:
+#     print("not installed")
+#     driver.install_app('E:/Tests/Appium/flutter_gallery_android.apk')
 """
 # 打开 uiautomatorviewer
 # resource-id 使用 driver.find_element_by_id('io.selendroid.testapp:id/my_text_field')
@@ -147,14 +165,23 @@ XPath 在 Appium 上的用法依然很强大，有时需要写更臭更长的定
 from time import sleep
 from selenium.webdriver.common.by import By
 
-sleep(10)
+sleep(5)
 # el = driver.find_elements_by_android_uiautomator('new UiSelector().text("CUPERTINO")')[0]
 # el = driver.find_element_by_name("CUPERTINO") NO
-el = driver.find_element_by_xpath("//android.view.View[contains(@text,'CUPERTINO')]")
-el.click()
+el = driver.find_element_by_xpath("//android.widget.ImageView[contains(@text,'请输入公司编码')]").send_keys("Appium")
+#el = driver.find_element_by_xpath('//android.widget.EditText[@content-desc="my_text_fieldCD"]')
 
-# el.send_keys("123")
+# pip install Appium-Flutter-Finder
+# from appium_flutter_finder.flutter_finder import FlutterElement, FlutterFinder
+#
+# el = FlutterElement(driver, FlutterFinder().by_text('请输入公司编码'))
+#el.click()
+#el.send_keys("Appium")
 # el.get_attribute('text')
+
+# https://stackoverflow.com/questions/60601889/error-getting-on-appium-cannot-set-the-element-to-value-did-you-interact-wit
+# driver.find_element_by_android_uiautomator('new UiSelector().text("请输入公司编码")').click()
+# driver.press_keycode(AndroidKey.A)
 """
 按键
 driver.press_keycode(4)          #发送keycode，功能：按键 # 该方法Android特有
@@ -197,17 +224,15 @@ from appium.webdriver.extensions.android.nativekey import AndroidKey
 driver.press_keycode(AndroidKey.HOME)
 """
 
-
-
 from appium.webdriver.common.touch_action import TouchAction
-#action = TouchAction(driver)
-#action.tap(元素) or
-#action.press(x=110,y=200).move_to(x=3,y=10).release().perform()
-
+# action = TouchAction(driver)
+# action.tap(元素) or
+# action.press(x=110,y=200).move_to(x=3,y=10).release().perform()
 
 
 # 多指操作
 from appium.webdriver.common.multi_action import MultiAction
+
 # smile = TouchAction()
 # smile.press(x=110,y=200).move_to(x=3,y=10).release()
 # ma = MultiAction(driver)
