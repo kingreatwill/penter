@@ -24,3 +24,5 @@ Stateful Functions 2.0 使有状态性和弹性有效的结合在一起，实现
 
 通过这些特性， Stateful Functions 2.0有效的解决了FaaS被诟病的两个缺点：状态一致性和函数间消息交换效率。
 
+# Flink Python 教材
+https://ci.apache.org/projects/flink/flink-docs-release-1.12/zh/dev/python/table-api-users-guide/intro_to_table_api.html

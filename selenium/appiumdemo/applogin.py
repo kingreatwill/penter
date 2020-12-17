@@ -168,7 +168,11 @@ from selenium.webdriver.common.by import By
 sleep(5)
 # el = driver.find_elements_by_android_uiautomator('new UiSelector().text("CUPERTINO")')[0]
 # el = driver.find_element_by_name("CUPERTINO") NO
-el = driver.find_element_by_xpath("//android.widget.ImageView[contains(@text,'请输入公司编码')]").send_keys("Appium")
+el = driver.find_element_by_xpath("//android.widget.ImageView[contains(@text,'请输入公司编码')]")
+#el = driver.find_element_by_android_uiautomator('text(\"请输入公司编码\")')
+# el.click()
+# sleep(5)
+el.send_keys("Appium")
 #el = driver.find_element_by_xpath('//android.widget.EditText[@content-desc="my_text_fieldCD"]')
 
 # pip install Appium-Flutter-Finder
