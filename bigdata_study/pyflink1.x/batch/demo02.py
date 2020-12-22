@@ -1,12 +1,14 @@
 from pyflink.common.serialization import SimpleStringEncoder
 from pyflink.common.typeinfo import Types
-from pyflink.datastream import StreamExecutionEnvironment
+from pyflink.datastream import StreamExecutionEnvironment, TimeCharacteristic
 from pyflink.datastream.connectors import StreamingFileSink
 
 
 def tutorial():
     env = StreamExecutionEnvironment.get_execution_environment()
     env.set_parallelism(1)
+    #env.set_stream_time_characteristic(TimeCharacteristic.EventTime)
+
     ds = env.from_collection(
         collection=[(1, 'aaa'), (2, 'bbb')],
         type_info=Types.ROW([Types.INT(), Types.STRING()]))

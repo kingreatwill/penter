@@ -21,10 +21,7 @@ import shutil
 import sys
 import tempfile
 
-from pyflink.common import Configuration
-from pyflink.common.typeinfo import Types
 from pyflink.dataset import ExecutionEnvironment
-from pyflink.datastream import StreamExecutionEnvironment, FilterFunction
 from pyflink.table import BatchTableEnvironment, TableConfig
 from pyflink.table import expressions as expr
 
@@ -70,32 +67,14 @@ def word_count():
 
     elements = [(word, 1) for word in content.split(" ")]
     table = t_env.from_elements(elements, ["word", "count"])
-
-
     table.group_by(table.word) \
-        .select(table.word, expr.lit(1).count.alias('count')) \
-        .execute_insert("Results").wait()
+         .select(table.word, expr.lit(1).count.alias('count')) \
+         .insert_into("Results")
 
-    #t_env.execute("")
-class MyFilterFunction(FilterFunction):
+    t_env.execute("word_count")
 
-    def filter(self, value):
-        return value[0] % 2 == 0
-
-def demo_stream():
-
-    see = StreamExecutionEnvironment.get_execution_environment()
-    #see.set_parallelism(1)
-    ds = see.from_collection([(1, 'Hi', 'Hello'), (2, 'Hello', 'Hi')],
-                                      type_info=Types.ROW(
-                                          [Types.INT(), Types.STRING(), Types.STRING()])
-                                      )
-    # ds.filter(MyFilterFunction()).print()
-    ds.print()
-    # 执行任务;
-    see.execute('job1')
 
 if __name__ == '__main__':
     logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(message)s")
 
-    demo_stream()
+    word_count()
