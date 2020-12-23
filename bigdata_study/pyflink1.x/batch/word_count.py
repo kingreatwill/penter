@@ -83,19 +83,16 @@ class MyFilterFunction(FilterFunction):
         return value[0] % 2 == 0
 
 def demo_stream():
-
     see = StreamExecutionEnvironment.get_execution_environment()
-    #see.set_parallelism(1)
+    see.set_parallelism(1)
     ds = see.from_collection([(1, 'Hi', 'Hello'), (2, 'Hello', 'Hi')],
                                       type_info=Types.ROW(
                                           [Types.INT(), Types.STRING(), Types.STRING()])
                                       )
-    # ds.filter(MyFilterFunction()).print()
+    ds.filter(MyFilterFunction()).print()
     ds.print()
     # 执行任务;
     see.execute('job1')
 
 if __name__ == '__main__':
-    logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(message)s")
-
     demo_stream()
