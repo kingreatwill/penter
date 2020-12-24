@@ -40,6 +40,8 @@ def word_count():
 
     t_config = TableConfig()
     env = ExecutionEnvironment.get_execution_environment()
+    #t_config.set_python_executable("/opt/python38/bin/python3")
+    # con/flink-conf.yaml 添加 python.client.executable: /usr/bin/python3
     t_env = BatchTableEnvironment.create(env, t_config)
 
     # register Results table in table environment
@@ -82,14 +84,16 @@ class MyFilterFunction(FilterFunction):
     def filter(self, value):
         return value[0] % 2 == 0
 
+# ./bin/flink run --python examples/python/table/batch/demo_stream.py
 def demo_stream():
     see = StreamExecutionEnvironment.get_execution_environment()
     see.set_parallelism(1)
+    #see.set_python_executable("/opt/python38/bin/python3")
     ds = see.from_collection([(1, 'Hi', 'Hello'), (2, 'Hello', 'Hi')],
                                       type_info=Types.ROW(
                                           [Types.INT(), Types.STRING(), Types.STRING()])
                                       )
-    ds.filter(MyFilterFunction()).print()
+    #ds.filter(MyFilterFunction()).print()
     ds.print()
     # 执行任务;
     see.execute('job1')
