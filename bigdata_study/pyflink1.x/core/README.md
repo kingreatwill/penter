@@ -19,3 +19,38 @@ f_s_env = StreamExecutionEnvironment.get_execution_environment()
 f_s_settings = EnvironmentSettings.new_instance().use_old_planner().in_streaming_mode().build()
 f_s_t_env = StreamTableEnvironment.create(f_s_env, environment_settings=f_s_settings)
 ```
+
+https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/python/python_config.html
+python执行分为 
+python.client.executable （PYFLINK_CLIENT_EXECUTABLE） 优先级，1.配置 'python.client.executable'在代码中；2.环境变量；3.con/flink-conf.yaml 添加 python.client.executable: /usr/bin/python3
+
+
+和python.executable （python UDF worker） 可以通过-pyexec
+
+t_config.set_python_executable("/opt/python38/bin/python3")
+
+
+## REST API
+https://ci.apache.org/projects/flink/flink-docs-release-1.12/ops/rest_api.html
+## Metrics
+https://ci.apache.org/projects/flink/flink-docs-release-1.12/ops/metrics.html
+
+Request metrics for a specific entity:
+
+/jobmanager/metrics
+/taskmanagers/<taskmanagerid>/metrics
+/jobs/<jobid>/metrics
+/jobs/<jobid>/vertices/<vertexid>/subtasks/<subtaskindex>
+Request metrics aggregated across all entities of the respective type:
+
+/taskmanagers/metrics
+/jobs/metrics
+/jobs/<jobid>/vertices/<vertexid>/subtasks/metrics
+Request metrics aggregated over a subset of all entities of the respective type:
+
+/taskmanagers/metrics?taskmanagers=A,B,C
+/jobs/metrics?jobs=D,E,F
+/jobs/<jobid>/vertices/<vertexid>/subtasks/metrics?subtask=1,2,3
+
+## Window
+https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/sql/queries.html#group-windows
