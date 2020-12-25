@@ -20,3 +20,36 @@ tf主要适合已经明确了解需要用深度学习，且数据处理需求不
 更常见的情况下，可以把sklearn和tf，甚至keras结合起来使用。sklearn肩负基本的数据清理任务，keras用于对问题进行小规模实验验证想法，而tf用于在完整的的数据上进行严肃的调参(炼丹)任务。
 而单独把sklearn拿出来看的话，它的文档做的特别好，初学者跟着看一遍sklearn支持的功能大概就对机器学习包括的很多内容有了基本的了解。举个简单的例子，sklearn很多时候对单独的知识点有概述，比如简单的异常检测。因此，sklearn不仅仅是简单的工具库，它的文档更像是一份简单的新手入门指南。
 因此，以sklearn为代表的传统机器学习库（如瑞士军刀般的万能但高度抽象），和以tf为代表的自由灵活更具有针对性的深度学习库（如乐高般高度自由但使用繁琐）都是机器学习者必须要了解的工具。
+
+文档：https://scikit-learn.org/stable/index.html
+视频：https://www.bilibili.com/video/BV1MA411J7wm?from=search&seid=7616958068850337769
+四类算法:分类，回归，聚类，降维
+
+分类：识别一个对象属于哪个类别。
+SVM
+nearest neighbors
+random forest
+
+回归：预测与对象关联的连续值属性。
+SVR
+nearest neighbors
+random forest
+
+聚类：将相似的对象自动分组成集合。
+ k-Means
+ spectral clustering
+ mean-shift
+ 
+降维：减少要考虑的随机变量数量。
+k-Means
+feature selection
+non-negative matrix factorization
+
+模型选择：比较、验证和选择参数和模型。
+ grid search
+ cross validation
+ metrics
+ 
+预处理：特征提取与归一化。
+  preprocessing
+  feature extraction

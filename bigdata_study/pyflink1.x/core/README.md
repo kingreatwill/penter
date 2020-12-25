@@ -29,6 +29,10 @@ python.client.executable （PYFLINK_CLIENT_EXECUTABLE） 优先级，1.配置 'p
 
 t_config.set_python_executable("/opt/python38/bin/python3")
 
+zip -r venv.zip venv
+bin/flink run -m yarn-cluster -pyarch venv.zip -pyexec venv.zip/venv/bin/Python -py deploy_demo.py
+
+-pyexec指定 venv.zip 中的 Python 解释器来执行 Python UDF，路径需要和 zip 包内部结构一致。
 
 ## REST API
 https://ci.apache.org/projects/flink/flink-docs-release-1.12/ops/rest_api.html

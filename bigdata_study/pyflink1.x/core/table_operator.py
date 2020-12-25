@@ -50,8 +50,8 @@ def demo01():
     orders.rename_columns(orders.b.alias('b2'), orders.c.alias('c2'))
     orders.group_by(orders.a).select(orders.a, orders.b.sum.alias('d'))
 
-
-
+    # tab.group_by(tab.key).select(tab.key, tab.value.avg.alias('average'))
+    # tab.group_by("key").select("key, value.avg as average")
     result = orders.filter(orders.a.is_not_null & orders.b.is_not_null & orders.c.is_not_null) \
         .select(orders.a.lower_case.alias('a'), orders.b, orders.rowtime) \
         .window(Tumble.over(lit(1).hour).on(orders.rowtime).alias("hourly_window")) \
@@ -67,6 +67,7 @@ def demo01():
 # SQL内置函数：https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/functions/systemFunctions.html
 # SQL Data类型：https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/types.html
 # table operator对应的sql：https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/sql/queries.html
+# 各种Window 写法;https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/tableApi.html#group-windows
 
 # https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/tableApi.html
 # https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/python/table-api-users-guide/operations.html
