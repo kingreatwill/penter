@@ -23,6 +23,14 @@ tf主要适合已经明确了解需要用深度学习，且数据处理需求不
 
 文档：https://scikit-learn.org/stable/index.html
 视频：https://www.bilibili.com/video/BV1MA411J7wm?from=search&seid=7616958068850337769
+
+机器学习的大致流程都是：数据获取——数据预处理——选择学习算法——训练模型——模型优化——可视化等。
+
+scikit-learn大体分成了六部分，其中clasification、regression、clustering都是主要的学习算法。
+demensionality reduction、preprocessing是用来数据预处理的。
+model selection则是用来做模型评估和优化的。
+
+
 四类算法:分类，回归，聚类，降维
 
 分类：识别一个对象属于哪个类别。
@@ -53,3 +61,7 @@ non-negative matrix factorization
 预处理：特征提取与归一化。
   preprocessing
   feature extraction
+
+conda install python-graphviz
+scikit-learn学习
+https://github.com/CodeZBW/Machine-Learning

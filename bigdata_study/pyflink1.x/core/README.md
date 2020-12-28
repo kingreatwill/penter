@@ -58,3 +58,8 @@ Request metrics aggregated over a subset of all entities of the respective type:
 
 ## Window
 https://ci.apache.org/projects/flink/flink-docs-release-1.12/dev/table/sql/queries.html#group-windows
+
+
+## 从Cassandra读取数据
+https://stackoverflow.com/questions/42617575/read-write-data-into-cassandra-using-apache-flink-java-api
+https://www.99opts.com/cassandra-source-to-retrieve-data-for-specific-data-types-with-apache-flink/
