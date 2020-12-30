@@ -1,6 +1,6 @@
 # 源码：https://github.com/scikit-learn/scikit-learn
 # 中文：https://github.com/apachecn/sklearn-doc-zh
-# https://sklearn.apachecn.org/
+# https://apachecn.gitee.io/sklearn-doc-zh/
 
 [scikit-learn和tensorflow的区别](https://www.cnblogs.com/timlong/p/11098661.html)
 
@@ -65,3 +65,13 @@ non-negative matrix factorization
 conda install python-graphviz
 scikit-learn学习
 https://github.com/CodeZBW/Machine-Learning
+
+# autosklearn
+AutoML
+https://github.com/automl/auto-sklearn
+```python
+import autosklearn.classification
+cls = autosklearn.classification.AutoSklearnClassifier()
+cls.fit(X_train, y_train)
+predictions = cls.predict(X_test)
+```

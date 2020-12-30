@@ -2,7 +2,7 @@ from sklearn import datasets  #从sklearn包中加载数据集模块
 from sklearn import svm
 import pickle
 #iris = datasets.load_iris()  #加载鸢尾花数据集
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV,learning_curve
 from sklearn.tree import DecisionTreeClassifier
 
 digits = datasets.load_digits() #加载数字图像数据集 ,原始的样例是一张（8 x 8）的图片 digits.images[0]
@@ -44,7 +44,53 @@ clf_iris.fit(iris.data[:-1], iris.target[:-1])
 print(clf_iris.predict(iris.data[-1:]))
 print(iris.target[-1])
 
-# 网格搜索(缺点：不能舍弃参数)
+# 参数调优1：学习曲线(缺点：不能舍弃参数)
+train_sizes, train_scores, test_scores = learning_curve(clf, iris.data,iris.target, cv=10, n_jobs=1, train_sizes=[0.1,0.325,0.55,0.775,1])
+"""
+1、estimator：用于预测的模型
+2、X：预测的特征数据
+3、y：预测结果
+4、train_sizes：训练样本相对的或绝对的数字，这些量的样本将会生成learning curve，当其为[0.1, 0.325, 0.55, 0.775, 1. ]时代表使用10%训练集训练，32.5%训练集训练，55%训练集训练，77.5%训练集训练100%训练集训练时的分数。
+5、cv：交叉验证生成器或可迭代的次数
+6、scoring：调用的方法 https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter
+
+# 学习曲线模块
+from sklearn.model_selection import learning_curve 
+# 导入digits数据集
+from sklearn.datasets import load_digits 
+# 支持向量机
+from sklearn.svm import SVC 
+import matplotlib.pyplot as plt
+import numpy as np
+
+digits = load_digits()
+X = digits.data
+y = digits.target
+
+# neg_mean_squared_error代表求均值平方差
+train_sizes, train_loss, test_loss = learning_curve(
+    SVC(gamma=0.01), X, y, cv=10, scoring='neg_mean_squared_error',
+    train_sizes=np.linspace(.1, 1.0, 5))
+
+# loss值为负数，需要取反
+train_loss_mean = -np.mean(train_loss, axis=1)
+test_loss_mean = -np.mean(test_loss, axis=1)
+
+# 设置样式与label
+plt.plot(train_sizes, train_loss_mean, 'o-', color="r",
+         label="Training")
+plt.plot(train_sizes, test_loss_mean, 'o-', color="g",
+        label="Cross-validation")
+
+plt.xlabel("Training examples")
+plt.ylabel("Loss")
+# 显示图例
+plt.legend(loc="best")
+plt.show()
+"""
+
+
+# 参数调优2：网格搜索(缺点：不能舍弃参数)
 # parameters = {'splitter':('best','random')
 #               ,'criterion':("gini","entropy")
 #               ,"max_depth":[*range(1,10)]
@@ -91,5 +137,7 @@ sc.tranform(X_test)
 2. 如果直接transform(testData)，程序会报错
 3. 如果fit_transfrom(trainData)后，使用fit_transform(testData)而不transform(testData)，虽然也能归一化，但是两个结果不是在同一个“标准”下的，具有明显差异。(一定要避免这种情况)
 """
+
+# 数据预处理 https://zhuanlan.zhihu.com/p/38160930
 
 
