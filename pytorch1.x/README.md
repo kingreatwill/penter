@@ -8,6 +8,7 @@ ImageCaptioning描述 ： https://github.com/ruotianluo/ImageCaptioning.pytorch
 翻译：https://github.com/OpenNMT/OpenNMT-py
 Deep Reinforcement Learning：https://github.com/jingweiz/pytorch-rl
 
+https://github.com/PyTorchLightning/PyTorch-lightning
 
 Torchvision.models包里面包含了常见的各种基础模型架构，主要包括：
 
