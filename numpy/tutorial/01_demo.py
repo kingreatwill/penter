@@ -15,3 +15,21 @@ plt.show()
 金毛的的随机幅度可能大一点, 吉娃娃的随机幅度可能小一点. 最后我们用柱状图来可视化化这些高度数据. 
 红色代表金毛的高度的个数, 蓝色代表吉娃娃的高度个数.
 """
+a = np.array([[1, 2], [3, 4]])
+b = np.array([[5, 6], [7, 8]])
+print(np.inner(a, b)) # 内积 Inner product
+print(np.dot(a, b)) # 点积 Dot product
+print(np.cross(a, b)) # 叉积  cross product
+print(np.outer(a, b)) # 外积 outer product
+print(a*b)
+print(a@b) # 等于 np.dot(a, b)
+
+a = np.array([1, 2, 3])
+b = np.array([5, 6, 7])
+print(np.inner(a, b)) # 内积 Inner product
+print(np.dot(a, b))    # 点积 Dot product
+print(np.cross(a, b)) # 叉积  cross product
+print(np.outer(a, b)) # 外积 outer product
+print(a*b)
+print(a@b)
+# 向量的点积=内积
