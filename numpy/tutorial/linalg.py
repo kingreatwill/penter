@@ -3,7 +3,7 @@ import numpy as np
 # numpy.linalg模块包含线性代数的函数。使用这个模块，可以计算逆矩阵、求特征值、解线性方程组以及求解行列式等。
 print("-----逆矩阵---------")
 A = np.mat("0 1 2;1 0 3;4 -3 8")
-# 逆矩阵
+# 逆矩阵（非奇异矩阵才有逆矩阵）
 print(np.linalg.inv(A))
 print(A * np.linalg.inv(A))
 print("-----求解形如 Ax = b 的线性方程组，其中 A 为矩阵，b 为一维或二维的数组，x 是未知变量---------")
@@ -13,12 +13,31 @@ x = np.linalg.solve(B, b)
 print(x)
 print(np.dot(B, x))  # 验证
 print("-----特征值和特征向量---------")
+'''
+Ax = ax
+A是n阶方阵，x是n*1的列向量（！=0），a是一个数字(可以等于0)
+
+a 就是A的特征值，x是a的特征向量
+
+Ax = ax这个过程，可以看成是线性替换，从方阵到数字，相当于空间转换
+
+解题思路：
+ax - Ax = 0
+aEx - Ax = 0
+aEx - Ax = 0
+(aE - A)x = 0
+-> 相当于求非零解  也就是(行列式)|aE - A| = 0
+
+性质：
+n个特征值相加=主对角元素相加
+n个特征值相乘=|A|(A的行列式)
+'''
 # 特征值（eigenvalue）即方程 Ax = ax 的根，是一个标量。其中，A 是一个二维矩阵，x 是一个一维向量。特征向量（eigenvector）是关于特征值的向量
 # numpy.linalg模块中，eigvals函数可以计算矩阵的特征值，而eig函数可以返回一个包含特征值和对应的特征向量的元组
 C = np.mat("3 -2;1 0")
 # 调用eigvals函数求解特征值
 c0 = np.linalg.eigvals(C)
-print(c0)
+print(c0) # [2. 1.] 结果可能是多个
 # 使用eig函数求解特征值和特征向量 (该函数将返回一个元组，按列排放着特征值和对应的特征向量，其中第一列为特征值，第二列为特征向量)
 c1, c2 = np.linalg.eig(C)
 print(c1, c2)
@@ -28,7 +47,7 @@ for i in range(len(c1)):
     print("left:", np.dot(C, c2[:, i]))
     print("right:", c1[i] * c2[:, i])
 
-I = np.mat("1 0;0 1")
+I = np.mat("1 0;0 1") # I 或者E是 单位向量
 # 验证  det(A - 特征值@I) = 0  ;其中I是单位向量
 print(np.linalg.det(C - np.dot(c1[0], I)))
 print(np.linalg.det(C - np.dot(c1[1], I)))
