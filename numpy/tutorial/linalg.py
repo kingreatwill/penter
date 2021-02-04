@@ -12,6 +12,34 @@ b = np.array([0, 8, -9])
 x = np.linalg.solve(B, b)
 print(x)
 print(np.dot(B, x))  # 验证
+print("-----LU分解(还有个LDU分解)---------")
+# 数值分析实验之矩阵的LU分解及在解线性方程组中的应用 https://www.cnblogs.com/ynly/p/12879529.html
+def decA(A):
+    A = np.array(A)
+    n = len(A)
+    L = np.zeros((n, n))
+    U = np.zeros((n, n))
+    U[0, :] = A[0, :]
+    L[:, 0] = A[:, 0] / U[0, 0]
+    for i in range(n):
+        L[i, i] = 1
+    for row in range(n - 1):
+        flag = 1
+        for col in range(row, n - 1):
+            U[row + 1, col + 1] = A[row + 1, col + 1] - np.dot(L[row + 1, :], U[:, col + 1])  # 计算U矩阵非零元素
+            if (row + 2 < n) & (flag == 1):  # 计算L矩阵非零元素
+                for k in range(1, row + 2):
+                    L[row + 2, k] = (A[row + 2, k] - np.dot(L[row + 2, :], U[:, k])) / U[k, k]
+            flag += 1
+    print("U = ", U)
+    print("L = ", L)
+
+
+A = [[10, 7, 8, 7],
+     [7, 5, 6, 5],
+     [8, 6, 10, 9],
+     [7, 5, 9, 10]]
+decA(A)
 print("-----特征值和特征向量---------")
 '''
 Ax = ax
@@ -37,7 +65,7 @@ n个特征值相乘=|A|(A的行列式)
 C = np.mat("3 -2;1 0")
 # 调用eigvals函数求解特征值
 c0 = np.linalg.eigvals(C)
-print(c0) # [2. 1.] 结果可能是多个
+print(c0)  # [2. 1.] 结果可能是多个（或者说一定是n个，n是A方阵的阶数，重根就是解出来的特征值有相等的）
 # 使用eig函数求解特征值和特征向量 (该函数将返回一个元组，按列排放着特征值和对应的特征向量，其中第一列为特征值，第二列为特征向量)
 c1, c2 = np.linalg.eig(C)
 print(c1, c2)
@@ -47,7 +75,7 @@ for i in range(len(c1)):
     print("left:", np.dot(C, c2[:, i]))
     print("right:", c1[i] * c2[:, i])
 
-I = np.mat("1 0;0 1") # I 或者E是 单位向量
+I = np.mat("1 0;0 1")  # I 或者E是 单位向量
 # 验证  det(A - 特征值@I) = 0  ;其中I是单位向量
 print(np.linalg.det(C - np.dot(c1[0], I)))
 print(np.linalg.det(C - np.dot(c1[1], I)))
