@@ -87,14 +87,23 @@ print("-----奇异值分解---------")
 D = np.mat("4 11 14;8 7 -2")
 U, Sigma, V = np.linalg.svd(D, full_matrices=False)
 print("U:", U)
-print("Sigma:", Sigma)
+print("Sigma:", Sigma) #Sigma是奇异值组成的对角矩阵， 奇异值越大的时候，代表的信息越多 ，注意：linalg为了节省空间，对角矩阵以一维向量返回
 print("V", V)
+
+print("Sigma 矩阵:", np.diag(Sigma))
 
 # 结果包含等式中左右两端的两个正交矩阵U和V，以及中间的奇异值矩阵Sigma
 # 使用diag函数生成完整的奇异值矩阵。将分解出的3个矩阵相乘
 print(U * np.diag(Sigma) * V)
 
 print("-----广义逆矩阵---------")
+"""
+伪逆矩阵：
+伪逆矩阵是逆矩阵的广义形式。由于奇异矩阵或非方阵的矩阵不存在逆矩阵，但在matlab里可以用函数pinv(A)求其伪逆矩阵
+
+若A不是方阵，或者|A|=0，那么只能求A的伪逆，所谓伪逆是通过SVD计算出来的；
+"""
+print("广义逆矩阵-右逆:")
 # 使用numpy.linalg模块中的pinv函数进行求解,
 # 注：inv函数只接受方阵作为输入矩阵，而pinv函数则没有这个限制
 E = np.mat("4 11 14;8 7 -2")
@@ -102,6 +111,20 @@ pseudoinv = np.linalg.pinv(E)  # 使用pinv函数计算广义逆矩阵
 print(pseudoinv)
 # 将原矩阵和得到的广义逆矩阵相乘
 print(E * pseudoinv)
+"""
+E = np.mat("4 11 14;8 7 -2")
+E 2*3
+
+pseudoinv = pinv(E) =（E的转置*E）的逆*E的转置
+
+行满秩，所以pseudoinv也称为右逆；
+列满秩，则是左逆，如下
+"""
+print("广义逆矩阵-左逆:")
+A = np.mat("4 8;11 7;14 -2")
+A_1 = np.linalg.pinv(A)
+print(A_1)
+print(A_1*A)
 print("-----行列式---------")
 F = np.mat("3 4;5 6")
 print(np.linalg.det(F))
