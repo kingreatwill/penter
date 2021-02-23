@@ -115,9 +115,9 @@ print(E * pseudoinv) # pseudoinv * E * pseudoinv = pseudoinv
 E = np.mat("4 11 14;8 7 -2")
 E 2*3
 
-行满秩，所以pseudoinv也称为右逆；
-列满秩，则是左逆，(pseudoinv = pinv(E) =（E的转置*E）的逆*E的转置)
-
+行满秩，所以pseudoinv也称为右逆(E * pseudoinv = I)；
+列满秩，则是左逆(A_1*A = I)，(pseudoinv = pinv(E) =（E的转置*E）的逆*E的转置)
+既不是行满秩也不是列满秩 的 伪逆(B*B_1*B = B, B_1*B*B_1 = B_1)
 """
 print("广义逆矩阵-左逆:")
 A = np.mat("4 8;11 7;14 -2")
@@ -139,11 +139,11 @@ print(A_1*A)
 r<m,r<n，行空间和列空间的维数相同，都是r维，行空间的任意向量 x，与 A 相乘，得到恰好是列空间中的所有向量，行空间向量 x与列空间向量 Ax 的关系是一 一对应的。所有向量都能由行空间的分量和零空间的分量构成。
 """
 print("广义逆矩阵-伪逆:")
-A = np.mat("4 8;2 4;1 2")
-A_1 = np.linalg.pinv(A)
-print(A_1)
-print(A*A_1*A)
-print(A_1*A*A_1)
+B = np.mat("4 8;2 4;1 2")
+B_1 = np.linalg.pinv(B)
+print(B_1)
+print(B*B_1*B)
+print(B_1*B*B_1)
 """
 AXA=A,XAX=X.此时，称矩阵X为矩阵A的伪逆，也称为广义逆矩阵。pinv(A)具有inv(A)的部分特性，但不与inv(A)完全等同。 　如果A为非奇异方阵，pinv(A)=inv(A)，但相比较而言，inv(A)花费更少的时间。
 """
