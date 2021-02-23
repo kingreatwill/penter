@@ -115,10 +115,9 @@ print(E * pseudoinv)
 E = np.mat("4 11 14;8 7 -2")
 E 2*3
 
-pseudoinv = pinv(E) =（E的转置*E）的逆*E的转置
-
 行满秩，所以pseudoinv也称为右逆；
-列满秩，则是左逆，如下
+列满秩，则是左逆，(pseudoinv = pinv(E) =（E的转置*E）的逆*E的转置)
+
 """
 print("广义逆矩阵-左逆:")
 A = np.mat("4 8;11 7;14 -2")
