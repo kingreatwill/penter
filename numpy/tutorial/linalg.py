@@ -110,7 +110,7 @@ E = np.mat("4 11 14;8 7 -2")
 pseudoinv = np.linalg.pinv(E)  # 使用pinv函数计算广义逆矩阵
 print(pseudoinv)
 # 将原矩阵和得到的广义逆矩阵相乘
-print(E * pseudoinv)
+print(E * pseudoinv) # pseudoinv * E * pseudoinv = pseudoinv
 """
 E = np.mat("4 11 14;8 7 -2")
 E 2*3
@@ -124,6 +124,30 @@ A = np.mat("4 8;11 7;14 -2")
 A_1 = np.linalg.pinv(A)
 print(A_1)
 print(A_1*A)
+
+"""
+1）矩阵可逆：
+即两边逆，AA−1=I=A−1A，此时 r=m=n，A 为方阵且满秩，零空间和左零空间都只有零向量。
+
+2）左逆(m>n=rank(A))：
+当列满秩，列向量线性无关，行向量不一定，r=n，零空间只有零向量，Ax=b 存在 0 个或 1 个解。 ATA 是 n×n 的对称矩阵，满秩，ATA是可逆的，称(ATA)−1AT为 A 的左逆，因为(ATA)−1AT∗A=I。这在最小二乘中至关重要，因为最小二乘以ATA 为系数矩阵（为什么统计学家喜欢这些？因为统计学家最喜欢用最小二乘），在列满秩的情况下，ATA可逆。此时[(ATA)−1AT]为 n×m，A为m×n，得 I为 n×n。
+
+3）右逆(n>m=rank(A))：
+当行满秩，行向量线性无关，r=m，AT 的零空间只含零向量，Ax=b有或无穷多个解，因为 A∗AT(AAT)−1=I，所以把 AT(AAT)−1 称为 A 的右逆。
+
+4）伪逆(rank(A)<min(m, n))：
+r<m,r<n，行空间和列空间的维数相同，都是r维，行空间的任意向量 x，与 A 相乘，得到恰好是列空间中的所有向量，行空间向量 x与列空间向量 Ax 的关系是一 一对应的。所有向量都能由行空间的分量和零空间的分量构成。
+"""
+print("广义逆矩阵-伪逆:")
+A = np.mat("4 8;2 4;1 2")
+A_1 = np.linalg.pinv(A)
+print(A_1)
+print(A*A_1*A)
+print(A_1*A*A_1)
+"""
+AXA=A,XAX=X.此时，称矩阵X为矩阵A的伪逆，也称为广义逆矩阵。pinv(A)具有inv(A)的部分特性，但不与inv(A)完全等同。 　如果A为非奇异方阵，pinv(A)=inv(A)，但相比较而言，inv(A)花费更少的时间。
+"""
+
 print("-----行列式---------")
 F = np.mat("3 4;5 6")
 print(np.linalg.det(F))
