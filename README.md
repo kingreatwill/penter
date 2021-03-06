@@ -129,6 +129,17 @@ conda env remove -n yourEnv: 删除你的环境
 conda env list: 查看所有的环境
 [Anaconda 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)
 
+## virtualenvwrapper
+https://virtualenvwrapper.readthedocs.io/en/latest/
+https://bitbucket.org/virtualenvwrapper/virtualenvwrapper
+
+```
+pip install virtualenvwrapper
+mkvirtualenv env1
+mkvirtualenv env2
+workon env1 # 进入环境
+echo $VIRTUAL_ENV # 查看
+```
 
 ## Python3 * 和 ** 运算符
 ### 1. 算数运算
