@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import torch
 
-
+import os
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 def numpy01():
     import numpy as np
 
@@ -26,7 +27,8 @@ def numpy01():
 
         # Compute and print loss
         loss = np.square(y_pred - y).sum()
-        print(t, loss)
+        if t % 100 == 99:
+            print(t, loss)
 
         # Backprop to compute gradients of w1 and w2 with respect to loss
         grad_y_pred = 2.0 * (y_pred - y)
@@ -36,7 +38,7 @@ def numpy01():
         grad_h[h < 0] = 0
         grad_w1 = x.T.dot(grad_h)
 
-        # Update weights
+        # 更新权重
         w1 -= learning_rate * grad_w1
         w2 -= learning_rate * grad_w2
 
@@ -85,5 +87,5 @@ def torch02():
 
 if __name__ == "__main__":
     print(torch.cuda.is_available())
-    # numpy01()
-    # torch02()
+    numpy01()
+    torch02()
