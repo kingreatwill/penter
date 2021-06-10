@@ -5,6 +5,8 @@ from torchvision import transforms
 
 # tensorboard --logdir=logs --port=6006
 
+# https://github.com/zergtant/pytorch-handbook/blob/master/chapter4/4.2.2-tensorboardx.ipynb
+
 # demo01
 writer = SummaryWriter("logs")
 image_path = "../imagelib/img/lena.jpg"
