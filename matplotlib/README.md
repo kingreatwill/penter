@@ -28,3 +28,5 @@ Seaborn是一个基于matplotlib的Python数据可视化库。它提供了一个
 bashplotlib
 控制台中绘图
 https://github.com/glamp/bashplotlib
+
+[python 快速画图 matplotlib, sympy, mpmath与 Matlab 比较](https://blog.csdn.net/robert_chen1988/article/details/80465255)

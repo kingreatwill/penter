@@ -54,6 +54,16 @@ for delta in [1, 5, 0.5]:
 plt.legend()
 plt.show()
 
+
+# mpmath 绘制图像
+# import mpmath as mp
+# mp.plot(lambda x: x*x, [-10, 10])
+
+# mpmath 绘制三维图像
+# import mpmath as mp
+# import math
+# mp.splot(lambda x, y: x*math.exp(-x*x-y*y))
+
 # sympy 绘制图像
 # from sympy.plotting import plot
 # from sympy import symbols
@@ -71,4 +81,7 @@ for delta in [1, 5, 0.5]:
     p.append((y, (r, -10, 10)))
 p2 = plot(*p)
 
+# import mpmath as mp
+# import math
+# mp.plot(lambda r: 1 / (1 + math.exp(r ** 2 / delta ** 2)), [-10, 10])
 
