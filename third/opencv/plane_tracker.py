@@ -104,7 +104,7 @@ class PlaneTracker:
         matches = [m[0] for m in matches if len(m) == 2 and m[0].distance < m[1].distance * 0.75]
         if len(matches) < MIN_MATCH_COUNT:
             return []
-        matches_by_id = [[] for _ in xrange(len(self.targets))]
+        matches_by_id = [[] for _ in range(len(self.targets))]
         for m in matches:
             matches_by_id[m.imgIdx].append(m)
         tracked = []

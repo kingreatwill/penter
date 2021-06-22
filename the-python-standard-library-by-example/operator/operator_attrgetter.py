@@ -19,7 +19,7 @@ class MyObj(object):
     def __repr__(self):
         return 'MyObj(%s)' % self.arg
 
-l = [ MyObj(i) for i in xrange(5) ]
+l = [ MyObj(i) for i in range(5) ]
 print 'objects   :', l
 
 # Extract the 'arg' value from each object

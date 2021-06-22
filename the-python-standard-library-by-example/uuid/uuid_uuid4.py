@@ -11,5 +11,5 @@ __version__ = "$Id$"
 
 import uuid
 
-for i in xrange(3):
+for i in range(3):
     print uuid.uuid4()

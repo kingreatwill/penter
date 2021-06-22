@@ -14,7 +14,7 @@ top = Element('top')
 
 children = [
     Element('child', num=str(i))
-    for i in xrange(3)
+    for i in range(3)
     ]
 
 top.extend(children)

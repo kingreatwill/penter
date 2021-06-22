@@ -23,7 +23,7 @@ import cv2 as cv
 def coherence_filter(img, sigma = 11, str_sigma = 11, blend = 0.5, iter_n = 4):
     h, w = img.shape[:2]
 
-    for i in xrange(iter_n):
+    for i in range(iter_n):
         print(i)
 
         gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)

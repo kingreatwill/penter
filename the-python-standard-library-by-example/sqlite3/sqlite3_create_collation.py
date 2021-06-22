@@ -48,7 +48,7 @@ with sqlite3.connect(db_filename,
     # Clear the table and insert new values
     conn.execute('delete from obj')
     conn.executemany('insert into obj (data) values (?)',
-                     [(MyObj(x),) for x in xrange(5, 0, -1)],
+                     [(MyObj(x),) for x in range(5, 0, -1)],
                      )
 
     # Query the database for the objects just saved

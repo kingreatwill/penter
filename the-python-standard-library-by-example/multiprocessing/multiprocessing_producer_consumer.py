@@ -53,17 +53,17 @@ if __name__ == '__main__':
     num_consumers = multiprocessing.cpu_count() * 2
     print 'Creating %d consumers' % num_consumers
     consumers = [ Consumer(tasks, results)
-                  for i in xrange(num_consumers) ]
+                  for i in range(num_consumers) ]
     for w in consumers:
         w.start()
     
     # Enqueue jobs
     num_jobs = 10
-    for i in xrange(num_jobs):
+    for i in range(num_jobs):
         tasks.put(Task(i, i))
     
     # Add a poison pill for each consumer
-    for i in xrange(num_consumers):
+    for i in range(num_consumers):
         tasks.put(None)
 
     # Wait for all of the tasks to finish

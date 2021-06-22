@@ -31,7 +31,7 @@ def get_key_wrapper(o):
     print 'key_wrapper(%s) -> %s' % (o, new_key)
     return new_key
         
-objs = [ MyObject(x) for x in xrange(5, 0, -1) ]
+objs = [ MyObject(x) for x in range(5, 0, -1) ]
 
 for o in sorted(objs, key=get_key_wrapper):
     print o

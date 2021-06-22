@@ -17,7 +17,7 @@ fmt = '%15s  %15s'
 print fmt % ('len(data)', 'len(compressed)')
 print fmt % ('-' * 15, '-' * 15)
 
-for i in xrange(5):
+for i in range(5):
     data = original_data * i
     compressed = bz2.compress(data)    
     print fmt % (len(data), len(compressed)),

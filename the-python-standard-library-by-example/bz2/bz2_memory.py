@@ -20,7 +20,7 @@ print
 compressed = bz2.compress(original_data)
 print 'Compressed   : %d bytes' % len(compressed)
 hex_version = binascii.hexlify(compressed)
-for i in xrange(len(hex_version)/40 + 1):
+for i in range(len(hex_version)/40 + 1):
     print hex_version[i*40:(i+1)*40]
 
 print

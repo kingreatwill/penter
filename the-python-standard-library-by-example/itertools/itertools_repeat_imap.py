@@ -32,5 +32,5 @@ __version__ = "$Id$"
 
 from itertools import *
 
-for i in imap(lambda x,y:(x, y, x*y), repeat(2), xrange(5)):
+for i in imap(lambda x,y:(x, y, x*y), repeat(2), range(5)):
     print '%d * %d = %d' % i

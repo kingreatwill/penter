@@ -73,7 +73,7 @@ class MOSSE:
         self.G = cv.dft(g, flags=cv.DFT_COMPLEX_OUTPUT)
         self.H1 = np.zeros_like(self.G)
         self.H2 = np.zeros_like(self.G)
-        for _i in xrange(128):
+        for _i in range(128):
             a = self.preprocess(rnd_warp(img))
             A = cv.dft(a, flags=cv.DFT_COMPLEX_OUTPUT)
             self.H1 += cv.mulSpectrums(self.G, A, 0, conjB=True)
