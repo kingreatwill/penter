@@ -1,0 +1,17 @@
+name: mlviz
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pip>19.0
+  - numpy
+  - scipy
+  - pandas
+  - scikit-learn
+  - jupyter
+  - bqplot
+  - voila
+  - statsmodels
+  - pillow
+  - pip:
+    - tensorflow
