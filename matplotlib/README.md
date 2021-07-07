@@ -30,3 +30,14 @@ bashplotlib
 https://github.com/glamp/bashplotlib
 
 [python 快速画图 matplotlib, sympy, mpmath与 Matlab 比较](https://blog.csdn.net/robert_chen1988/article/details/80465255)
+
+
+bqplot
+https://github.com/bqplot/bqplot
+
+
+voila
+https://github.com/voila-dashboards/voila
+
+SandDance
+https://github.com/microsoft/SandDance
