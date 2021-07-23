@@ -1,9 +1,11 @@
+# https://ai.tencent.com/ailab/nlp/en/embedding.html
 # gensim使用腾讯开源的预训练好的word2vec模型 : https://ai.tencent.com/ailab/nlp/en/data/Tencent_AILab_ChineseEmbedding.tar.gz
 # https://www.ctolib.com/mip/cliuxinxin-TX-WORD2VEC-SMALL.html
 # 利用gensim使用腾讯开源的预训练好的词向量 https://www.jianshu.com/p/bba1bf9518dc
 from gensim.models import KeyedVectors
 # 每个world是200维的向量
-file = r'E:\bigdata\ai\Tencent_AILab_ChineseEmbedding\70000-small.txt'
+# 原版15个G，一般爱好者很难玩出来。https://github.com/cliuxinxin/tx-word2vec-small # r'F:\bigdata\ai\Tencent_AILab_ChineseEmbedding\70000-small.txt'
+file = r'F:\bigdata\ai\Tencent_AILab_ChineseEmbedding\Tencent_AILab_ChineseEmbedding.txt'
 model = KeyedVectors.load_word2vec_format(file, binary=False)
 model.init_sims(replace=True)  # 神奇，很省内存，可以运算most_similar
 
