@@ -24,21 +24,24 @@ https://seaborn.pydata.org/
 这是另一个可视化工具，但这个工具更侧重于统计结果的可视化，比如直方图、饼图、曲线图或相关性表等。
 Seaborn是一个基于matplotlib的Python数据可视化库。它提供了一个高级界面，以绘制吸引和信息统计图形。
 是基于matplotlib进行高级封装之后的结果(以pandas为数据基础)，语法更简单，但是功能相对不如matplotlib。seaborn更多针对统计学领域。
-
-
-## bashplotlib
+## bokeh
+https://github.com/bokeh/bokeh
+## 其它
+### mpld3
+### D3.js
+### bashplotlib
 控制台中绘图
 https://github.com/glamp/bashplotlib
 
 [python 快速画图 matplotlib, sympy, mpmath与 Matlab 比较](https://blog.csdn.net/robert_chen1988/article/details/80465255)
 
 
-## bqplot
+### bqplot
 https://github.com/bqplot/bqplot
 
 
-## voila
+### voila
 https://github.com/voila-dashboards/voila
 
-## SandDance
+### SandDance
 https://github.com/microsoft/SandDance
