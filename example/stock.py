@@ -1,0 +1,1 @@
+#目前有不少支持Python接口的金融数据库，比如Tushare、AKshare、Baostock、wind等，都可以获得国内股票、基金、期货、利率等数据。
