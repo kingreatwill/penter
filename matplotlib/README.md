@@ -18,6 +18,9 @@ https://matplotlib.org/api/index.html
 ## plotly
 https://github.com/plotly/plotly.py
 
+## Dash 
+https://github.com/plotly/dash
+
 ## Seaborn
 https://github.com/mwaskom/seaborn
 https://seaborn.pydata.org/
@@ -45,3 +48,4 @@ https://github.com/voila-dashboards/voila
 
 ### SandDance
 https://github.com/microsoft/SandDance
+

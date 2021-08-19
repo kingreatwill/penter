@@ -10,6 +10,8 @@ Deep Reinforcement Learning：https://github.com/jingweiz/pytorch-rl
 
 https://github.com/PyTorchLightning/PyTorch-lightning
 
+[20天吃透Pytorch](https://eat.woshinlper.com/)
+
 Torchvision.models包里面包含了常见的各种基础模型架构，主要包括：
 
 AlexNet
