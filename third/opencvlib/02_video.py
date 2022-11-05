@@ -89,7 +89,7 @@ CCTV6高清：http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8
 
 
 import cv2
-capture = cv2.VideoCapture("http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8")#cv2.VideoCapture("rtsp://admin:cqh123456@192.168.1.232/h264/ch1/sub/av_stream")
+capture = cv2.VideoCapture("rtsp://admin:L2608EFF@192.168.31.17:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif")#cv2.VideoCapture("rtsp://admin:cqh123456@192.168.1.232/h264/ch1/sub/av_stream")
 while(True):
     # 获取一帧
     ret, frame = capture.read()

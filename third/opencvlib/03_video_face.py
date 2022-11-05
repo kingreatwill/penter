@@ -1,8 +1,8 @@
 import cv2
 
-capture = cv2.VideoCapture("rtsp://admin:cqh123456@192.168.1.232/h264/ch1/sub/av_stream")
+capture = cv2.VideoCapture("rtsp://admin:L2608EFF@192.168.31.17:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif")
 classfier = cv2.CascadeClassifier(
-    r"D:\Programs\Python\Python37\Lib\site-packages\cv2\data\haarcascade_frontalface_alt.xml")
+    r"D:\Program Files\Python38\Lib\site-packages\cv2\data\haarcascade_frontalface_alt.xml")
 # 识别出人脸后要画的边框的颜色，RGB格式, color是一个不可增删的数组
 color = (0, 255, 0)
 while (True):
